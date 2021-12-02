@@ -29,7 +29,7 @@ setuptools.setup(
         "fuzzysearch==0.7.0",
         "fuzzywuzzy==0.18.0",
         "jsonpickle==1.4.2",
-        "nltk==3.4.5",
+        "nltk==3.6.5",
         "num2words==0.5.10",
         "pony==0.7.14",
         "protobuf==3.11.3",
