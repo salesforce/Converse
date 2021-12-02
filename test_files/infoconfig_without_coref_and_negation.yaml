@@ -1,0 +1,11 @@
+Models:
+  ner:
+    description: named entity extraction
+    init_args:
+      service_channel: 34.122.137.192:50051
+    call_args:
+      returnSpan: True
+  intent:
+    description: nli based intent detection
+    init_args:
+      service_channel: 35.225.32.179:9001

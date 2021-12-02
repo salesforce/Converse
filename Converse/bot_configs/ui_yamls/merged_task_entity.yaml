@@ -1,0 +1,196 @@
+Bot:
+  text_bot: true
+  bot_name: Nurse Nancy
+Task:
+  positive:
+    description: polarity
+    samples:
+      - "Yes"
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - yes please
+      - affirmative
+      - roger that
+  negative:
+    description: polarity
+    samples:
+      - "No"
+      - Sorry
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+      - I forgot my
+      - I forgot it
+      - I don't want to tell you
+  get_health_insurance_info:
+    description: get health insurance info
+    entities:
+      ssn:
+        function: verify_ssn
+        confirm: false
+        prompt:
+          - May I have the last four digits of your social security number?
+        response: null
+        type: CARDINAL
+        methods:
+          ner: null
+      birthday:
+        function: verify_ssn
+        confirm: false
+        prompt:
+          - And your birthday?
+        response: null
+        type: DATE
+        methods:
+          ner: null
+    entity_groups:
+      entity_group_1:
+        - ssn
+      entity_group_2:
+        - birthday
+    success:
+      AND:
+        - VERIFY:
+            - entity_group_1
+        - VERIFY:
+            - entity_group_2
+    finish_response:
+      success:
+        - I have found your health insurance record.
+      failure:
+        - Sorry, I am not able to find a record.
+    repeat: false
+    max_turns: 10
+  health_appointment:
+    description: make an appointment at Stanford Health Care
+    samples:
+      - I want to see a doctor
+      - I don't feel so good
+      - I would like to make an appointment
+      - I want to make an appointment
+      - I got a fever
+    entities:
+      appt_date:
+        function: collect_info
+        confirm: false
+        prompt:
+          - What's your preferred date for the appointment?
+        response: null
+        type: DATE
+        methods:
+          ner: null
+      appt_time:
+        function: collect_info
+        confirm: false
+        prompt:
+          - At what time?
+        response: null
+        type: TIME
+        methods:
+          ner: null
+      department:
+        function: collect_info
+        confirm: false
+        prompt:
+          - Which department do you want to make the appointment with?
+        response: null
+        type: PICKLIST
+        methods:
+          fuzzy_matching:
+            - ICU
+            - Elderly services
+            - Diagnostic Imaging
+            - General Surgery
+            - Neurology
+            - Microbiology
+            - Nutrition and Dietetics
+        suggest_value: true
+      doctor_name:
+        function: collect_info
+        confirm: null
+        prompt: null
+        response: null
+        type: PERSON
+        methods:
+          ner: null
+      covid_protocol:
+        function: covid_protocol
+        confirm: false
+        prompt: null
+        response:
+          - <info>
+        methods: null
+      have_health_insurance:
+        function: check_condition
+        confirm: false
+        prompt:
+          - Do you have health insurance?
+        response:
+          - <info>
+        type: USER_UTT
+        methods:
+          user_utterance: null
+      name:
+        function: collect_info
+        confirm: false
+        prompt:
+          - Since you don't have health insurance, let me create a profile for you.
+            What's your name?
+        response: null
+        type: PERSON
+        methods:
+          ner: null
+      birthday:
+        function: collect_info
+        confirm: false
+        prompt:
+          - May I know your birthday?
+        response:
+          - I have created a profile for you.
+        type: DATE
+        methods:
+          ner: null
+    entity_groups:
+      entity_group_1:
+        - appt_date
+        - appt_time
+      entity_group_2:
+        - department
+        - doctor_name
+      entity_group_3:
+        - covid_protocol
+      entity_group_4:
+        - have_health_insurance
+      entity_group_5:
+        - name
+        - birthday
+    success:
+      AND:
+        - INSERT:
+            - entity_group_1
+        - INSERT:
+            - entity_group_2
+        - OR:
+            - AND:
+                - API:
+                    - entity_group_4
+                - TASK:
+                    - get_health_insurance_info
+            - INSERT:
+                - entity_group_5
+        - INFORM:
+            - entity_group_3
+    finish_response:
+      success:
+        - I have booked an appointment for you.
+      failure:
+        - Sorry, I can't help you book an appointment.
+    task_finish_function: create_appointment
+    repeat: true
+    repeat_response:
+      - Would you like to make another appointment?
+    max_turns: 10

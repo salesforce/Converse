@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-intent-both
+  namespace: sfr-ns-x-yang
+spec:
+  selector:
+    matchLabels:
+      app: intent-both
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: intent-both
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: sfr-home-pv-x-yang
+          persistentVolumeClaim:
+            claimName: sfr-home-pvc-x-yang
+      containers:
+      - name: xinyi-test
+        image: "gcr.io/salesforce-research-internal/txie-converse"
+        command: ["sleep","infinity"]
+        command: ["/bin/sh"]
+        args:
+          ["-c", "cd /export/home/models/intent_converse; python -u server.py --model_name tiny-bert >server_intent.out"]
+        ports:
+        - containerPort: 9001
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+            cpu: "7"
+            memory: "16Gi"
+        volumeMounts:
+          - name: sfr-home-pv-x-yang
+            mountPath: "/export/home"
+      tolerations:
+      - key: "gpu_num"
+        operator: "Equal"
+        value: "2"
+        effect: "NoSchedule"

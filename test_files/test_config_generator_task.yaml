@@ -1,0 +1,83 @@
+Bot:
+  text_bot: true
+  bot_name: test_bot
+Task:
+  positive:
+    description: polarity
+    samples:
+    - 'Yes'
+    - Sure
+    - correct
+    - No problem
+    - that's right
+    - yes please
+    - affirmative
+    - roger that
+  negative:
+    description: polarity
+    samples:
+    - 'No'
+    - Sorry
+    - No, I don't think so.
+    - I dont know
+    - It's not right
+    - Not exactly
+    - Nothing to do
+    - I forgot my
+    - I forgot it
+    - I don't want to tell you
+  online_shopping:
+    description: null
+    samples: []
+    entities:
+      entity_1:
+        function: null
+        confirm: false
+        prompt: []
+        response: []
+      entity_2:
+        function: null
+        confirm: false
+        prompt: []
+        response: []
+    entity_groups:
+      entity_group_1: []
+    success:
+      AND: []
+    finish_response:
+      success: []
+      failure: []
+    repeat: false
+    repeat_response: []
+    task_finish_function: null
+    max_turns: 10
+  online_health:
+    description: null
+    samples: []
+    entities:
+      entity_1:
+        function: null
+        confirm: false
+        prompt: []
+        response: []
+      entity_2:
+        function: null
+        confirm: false
+        prompt: []
+        response: []
+      entity_3:
+        function: null
+        confirm: false
+        prompt: []
+        response: []
+    entity_groups:
+      entity_group_1: []
+    success:
+      AND: []
+    finish_response:
+      success: []
+      failure: []
+    repeat: false
+    repeat_response: []
+    task_finish_function: null
+    max_turns: 10

@@ -1,0 +1,51 @@
+# a->b->c->d->b
+# Here, task a's sub-task is b, b's sub-task is c, c's sub-task is d and d's sub-task is b
+Task:
+  task_a:
+    description: test task a
+    samples:
+    entities:
+    entity_groups:
+    success:
+      AND:
+        - TASK:
+            - task_b
+    repeat: false
+    max_turns: 10
+
+  task_b:
+    description: test task b
+    samples:
+    entities:
+    entity_groups:
+    success:
+      AND:
+        - TASK:
+            - task_c
+    repeat: false
+    max_turns: 10
+
+  task_c:
+    description: test task c
+    samples:
+    entities:
+    entity_groups:
+    success:
+      AND:
+        - TASK:
+           - task_d
+    repeat: false
+    max_turns: 10
+
+  task_d:
+    description: test task d
+    samples:
+    entities:
+    entity_groups:
+    success:
+      AND:
+        - TASK:
+            - task_b
+    repeat: false
+    max_turns: 10
+

@@ -1,0 +1,20 @@
+Response:
+  greetings:
+    known:
+      - Hi, I found an account associated with your phone number. Are you <User>?
+    start:
+      - Hi <user name>, I am <bot name>. What can I do for you?
+    unfinish:
+      - Hi, <User>, are you calling to follow up on <Task>?
+
+  task_finish_response:
+    success:
+      - Your request for <Task> has been completed.
+    failure:
+      - Sorry, I cannot help to finish <Task>.
+
+  task_repeat_response:
+    - Would you like to repeat <Task>?
+
+  suggest_entity_value:
+    - "Your choices are listed here:\n"

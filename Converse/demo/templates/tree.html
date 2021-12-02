@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Task Tree Visualization</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <style>
+        div.dashed {
+            width: 320px;
+            alignment: left;
+            font: 14px sans-serif;
+            text-align: center;
+            border-style: dashed;
+            border-color: steelblue;
+        }
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 3px;
+        }
+        .node text {
+            font: 12px sans-serif;
+        }
+        .link {
+            fill: none;
+            stroke: #777;
+            stroke-width: 2px;
+        }
+    </style>
+
+</head>
+<body>
+<div id="tree"></div>
+<div class="dashed">
+    <p>Legend</p>
+   <svg id="legend" height=200 width=300></svg>
+</div>
+<script>
+    // ************** Generate the tree diagram     *****************
+    const data = {{tree|tojson}};
+
+    function build_tree(treeData) {
+        const win_width = window.innerWidth;
+        margin = {top: 20, right: 20, bottom: 20, left: 60},
+            width = win_width - margin.right - margin.left - 20,
+            width = width < 1500 ? 1500 : width;
+        height = win_width * 0.6 - margin.top - margin.bottom;
+        height = height < 400 ? 400 : (height > 500 ? 500 : height);
+//console.log('height', height);
+        let i = 0;
+        let tree = d3.layout.tree().size([height, width]);
+        var diagonal = d3.svg.diagonal().projection(function (d) {
+            return [d.y, d.x];
+        });
+
+        d3.select("#tree").select("svg").remove();
+
+        var svg = d3.select("#tree").append("svg")
+            .attr("width", width + margin.right + margin.left)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        svg.selectAll("*").remove();
+        var root = treeData;
+        update(root);
+
+        function update(source) {
+            // Compute the new tree layout.
+            var nodes = tree.nodes(root).reverse(),
+                links = tree.links(nodes);
+            // Normalize for fixed-depth.
+            nodes.forEach(function (d) {
+                d.y = d.depth * 180;
+            });
+            // Declare the nodes…
+            var node = svg.selectAll("g.node")
+                .data(nodes, function (d) {
+                    return d.id || (d.id = ++i);
+                });
+            // Enter the nodes.
+            var nodeEnter = node.enter().append("g")
+                .attr("class", "node")
+                .attr("transform", function (d) {
+                    return "translate(" + d.y + "," + d.x + ")";
+                });
+            nodeEnter.append("circle")
+                .attr("r", function (d) {
+                    return d.current ? 30 : 14;
+                })
+                .style("fill", function (d) {
+                    if (d.type === "OrNode") return d._children ? "deeppink" : "pink";
+                    if (d.type === "AndNode") return d._children ? "blue" : "lightblue";
+                    if (d.type === "success") return d._children ? "green" : "lightgreen";
+                    if (d.type === "failed") return d._children ? "red" : "red";
+                    return d._children ? "lightsteelblue" : "#fff";
+                });
+            nodeEnter.append("text")
+                .attr("x", function (d) {
+                    if (d.current) return 36;
+                    return d.children || d._children ? -24 : 24;
+                })
+                .attr("dy", function (d) {
+                    return d.name.search(":") != -1 ? "-.35em" : ".35em"
+                })
+                .attr("text-anchor", function (d) {
+                    return d.children || d._children ? "end" : "start";
+                })
+                .text(function (d) {
+                    return d.name.search(":") != -1 ? d.name.substring(0, d.name.search(":") + 2) : ((d.current) ? d.name + " ?" : d.name);
+                })
+                .style("fill-opacity", 1);
+            nodeEnter.append("text")
+                .attr("x", function (d) {
+                    if (d.current) return 36;
+                    return d.children || d._children ? -24 : 24;
+                })
+                .attr("y", 15)
+                .attr("text-anchor", function (d) {
+                    return d.children || d._children ? "end" : "start";
+                })
+                .style("font-weight", function (d) {
+                    return d.name.search(":") != -1 ? "bold" : "normal";
+                })
+                .text(function (d) {
+                    return d.name.search(":") != -1 ? d.name.substring(d.name.search(":") + 2) : "";
+                })
+                .style("fill-opacity", 1);
+            // Declare the links…
+            var link = svg.selectAll("path.link")
+                .data(links, function (d) {
+                    return d.target.id;
+                });
+            // Enter the links.
+            link.enter().insert("path", "g")
+                .attr("class", "link")
+                .attr("d", diagonal);
+        }
+    }
+
+    build_tree(data);
+
+    var Svg = d3.select("#legend")
+    var keys = ["Or Node", "And Node", "Successful Node", "Failed Node or Node haven't tried", "Current Node"]
+    var color = ["pink", "lightblue", "lightgreen", "red", "#fff"]
+
+    Svg.selectAll("nodes")
+        .data(keys)
+        .enter()
+        .append("circle")
+        .attr("cx", 70)
+        .attr("cy", function (d, i) {
+            if (d == "Current Node")
+                return 45 + i * 32;
+            return 30 + i * 32;
+        }) // 30 is where the first dot appears. 40 is the distance between dots
+        .attr("r", function (d) {
+            if (d == "Current Node")
+                return 20;
+            return 10;
+        })
+        .style("fill", function(d, i){ return color[i]})
+        .style("stroke", "steelblue")
+        .style("stroke-width", "3px")
+
+    Svg.selectAll("labels")
+        .data(keys)
+        .enter()
+        .append("text")
+        .attr("x", function (d) {
+            if (d == "Current Node")
+                return 100
+            return 85
+        })
+        .attr("y", function (d, i) {
+            if (d == "Current Node")
+                return 45 + i * 32;
+            return 30 + i * 32;
+        }) // 30 is where the first dot appears. 40 is the distance between dots
+        .style("font", "12px sans-serif")
+        .text(function (d) {
+            return d
+        })
+        .attr("text-anchor", "left")
+        .style("alignment-baseline", "middle")
+    /*
+        window.onresize = function() {
+            build_tree(data);
+            }
+    */
+</script>
+</body>
+</html>

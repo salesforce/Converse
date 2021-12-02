@@ -1,0 +1,27 @@
+#FROM nvidia/cuda:10.1-devel-ubuntu18.04
+FROM nvidia/cuda:10.1-base-ubuntu18.04
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget git unzip bzip2 build-essential default-jre ca-certificates && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV PATH /opt/conda/bin:$PATH
+
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py37_4.9.2-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
+    rm ~/miniconda.sh && \
+    /opt/conda/bin/conda clean -tipsy && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc
+
+RUN conda install pytorch==1.8.1 torchvision==0.9.1 cudatoolkit=10.1 -c pytorch
+RUN conda install scikit-learn==0.24.1
+RUN pip install typer==0.3.0 pytorch-pretrained-BERT==0.6.2 transformers==4.5.1 spacy==3.0.6 ftfy==4.4.3 duckling==1.8.0 grpcio==1.37.1 protobuf==3.15.8 Jpype1==0.7.5
+RUN python -m spacy download en
+
+RUN mkdir /workspace
+ADD . /workspace
+WORKDIR /workspace
+CMD ["/bin/bash", "-c", "./entrypoint.sh"]

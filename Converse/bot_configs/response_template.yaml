@@ -1,0 +1,160 @@
+Response:
+  greetings:
+    known:
+      - Hi, I found an account associated with your phone number. Are you <User>?
+    start:
+      - Hi <user name>, I am <bot name>. What can I do for you?
+    unfinish:
+      - Hi, <User>, are you calling to follow up on <Task>?
+
+  goodbye:
+    #- Glad I can help! Bye.
+    #- Have a nice day.
+    #- Thank you for connecting with our service today. Have a nice day.
+    - Sounds good. I'm glad I could help. Thanks for calling, and have a good one.
+
+  okay:
+    - Got it.
+    - Okay.
+    #- Noted.
+    #- No Problem.
+
+  let_me_know:
+    - Let me know if I can help you with something.
+    - Let me know what I can do for you.
+
+  take_time:
+    - Please take your time.
+
+  recommend:
+    - Do you mean you need to <Task>?
+    - Did you mean you need to <Task>?
+
+  forward_to_human:
+    - I couldn't help you with your request. Let me forward this case to one of our professional agents. Please wait for 5 minutes.
+
+  ask_info:
+    #- Would you mind to provide <Info>?
+    #- I need your <Info> in order for me to help you. Would you mind providing that?
+    - Can I get your <Info>?
+    - What is your <Info>?
+
+  query_res:
+    - The result for your inquiry is <Info>.
+
+  ask_info_update:
+    #- I need your new <Info> in order for me to update the information. Would you mind to provide that?
+    - What is your new <Info>?
+
+  cannot_recognize_entity:
+    - I am sorry, but I could not recognize your <Info>.
+
+  confirm_info:
+    - Okay, so <Value>?
+
+  confirm_retrieved_info:
+    - Your <Info> is <Value>. Is that correct?
+
+  confirm_info_with_proposal:
+    - Well, the best <Info> for you is <Value>. Does that still work?
+
+  inform_user:
+    -  One moment please. Your <Entity> is <Info>.
+
+  verify_success:
+    #- Thanks, your <Info> "<Val>" is verified.
+    - Thanks, your <Info> is verified.
+
+  verify_failed:
+    - Sorry, I am not able to verify your <Info> "<Val>".
+
+  update_success:
+    #- Your <Info> is successfully updated to "<Val>".
+    #- Your <Info> is successfully updated.
+    - One second. Okay, just updated, you are all set.
+
+  insert:
+    - Okay.
+    - Got it.
+
+  delete:
+    - Okay.
+
+  got_intent_first:
+    - Oh sure, I'd be happy to help you <Task>.
+    #- Let me check what we can do.
+
+  task_repeat_response:
+    - Would you like to <Task> again?
+
+  got_intent_2:
+    #- Sure, I can also help you with <Task>.
+    - Sure thing, I can definitely help you <Task>, too.
+
+  confirm_intent:
+    - So you want to <Task>, right?
+
+  got_sub_task:
+    - First, I need to <Task>.
+
+  got_intent_middle:
+    - Now let me help you <Task>.
+
+  got_invalid_request:
+    - I am sorry, but I cannot handle your request.
+    - Sorry, I could not help you with the request.
+
+  notification:
+    - Thanks for sharing that information.
+    - Sure, I will keep that in mind.
+
+  continue_current:
+    - Let me first <Task>.
+
+  confirm_finish:
+    - Is there anything else I can help you with today?
+
+  confirm_satisfied:
+    - Does that sound good?
+
+  task_finish_response:
+    success:
+      - Your request has been completed.
+    failure:
+      - Sorry, I cannot help to finish <Task>.
+
+  follow_up:
+    - Do you want me to follow up with you once <Task> is finished?
+
+  failure:
+    - I do not know how to help with that. Would you like to talk to an agent?
+    - I do not understand. Would you like to try something different?
+    - What was that? Can you try again?
+
+  welcome_back:
+    - Welcome back, what can I do for you?
+
+  ask_spelling:
+    PERSON:
+      - Sorry, I can't verify your name. Could you please spell it? Like T O M or T as in Time, O as in Open, M as in Money.
+    EMAIL:
+      - Sorry, I can't verify your email. Could you please spell it? Like t o m at salesforce dot com.
+    CARDINAL:
+      - Sorry, I can't verify that. Could you please spell it? Like 1 2 3 4 or 12 34.
+    ZIPCODE:
+      - Sorry, I can't verify your zip code. Could you please spell it? Like 2 0 5 0 5.
+
+  qa:
+    - I am happy to trigger our QA module (In progress).
+
+  api:
+    - <info>.
+
+  multi_entity:
+    - I got multiple possible answers for <Entity>, <Pool>, which one did you mean?
+
+  suggest_tasks:
+    - "I am sorry that I couldn't understand what you said. Here's what I can do: \n<tasks>You can ask me to do these tasks."
+
+  suggest_entity_value:
+    - "Your choices are listed here:\n"

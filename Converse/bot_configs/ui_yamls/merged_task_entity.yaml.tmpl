@@ -1,0 +1,39 @@
+Bot: # default
+  bot_name: text # default
+  text_bot: true|false # default
+Task:
+  _name_:
+    description: text  # default
+    samples:  # default
+      - text
+    entities: # default
+      _name_:
+        type: STRING|PICKLIST|USER_UTT|CARDINAL|DATE|EMAIL|EVENT|FAC|LANGUAGE|LAW|AP/LOCATION|MONEY|NORP|ORDINAL|ORG|PERCENT|PERSON|PRODUCT|QUANTITY|TIME|DUCKLING/time|DUCKLING/phone-number|duckling/url|WORK_OF_ART|ZIPCODE  # default
+        confirm: false|true # default
+        function: datalist # collect_info 
+        prompt: # default
+          - text
+        response: # default
+          - <info>
+        retrieve: true|false
+        methods: # default, drop-down list of the following choices
+           ner: null
+           spelling: null
+           user_utterance: null
+           fuzzy_matching:
+             - xxx
+           regex: text
+        suggest_value: true|false # default if method is fuzzy_matching
+    entity_groups: # default
+      _name_: multiselect  # drop-down list, entity names from entities
+    success: object # default
+    finish_response: # default
+      success: # default
+        - text
+      failure: # default
+        - text
+    task_finish_function: datalist # default
+    repeat: true|false # default
+    repeat_response: # default
+      - text
+    max_turns: 10 # default

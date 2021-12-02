@@ -1,0 +1,15 @@
+Entity:
+  reason:
+    methods: {}
+  name:
+    type: PERSON
+    methods:
+  card_number:
+    type: STRING
+    methods:
+      regex: 4[0-9]{12}(?:[0-9]{3})?
+  zip_code:
+    type: ZIPCODE
+    methods: {}
+  remaining_balance:
+    methods: {}

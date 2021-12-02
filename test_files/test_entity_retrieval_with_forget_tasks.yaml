@@ -1,0 +1,86 @@
+Bot:
+  text_bot: true
+  bot_name: test bot
+Task:
+  positive:
+    description: polarity
+    samples:
+    - 'Yes'
+    - Sure
+    - correct
+    - No problem
+    - that's right
+    - yes please
+    - affirmative
+    - roger that
+  negative:
+    description: polarity
+    samples:
+    - 'No'
+    - Sorry
+    - No, I don't think so.
+    - I dont know
+    - It's not right
+    - Not exactly
+    - Nothing to do
+    - I forgot my
+    - I forgot it
+    - I don't want to tell you
+  test_task:
+    description: check info
+    samples:
+      - check info
+      - check information
+    entities:
+      appt_date:
+        function: collect_info
+        confirm: false
+        prompt: []
+        response:
+          - OK.
+      birthday:
+        function: null
+        confirm: false
+        retrieve: false
+        prompt: []
+        response:
+          - OK.
+      name:
+        function: null
+        confirm: false
+        prompt: []
+        response:
+          - OK.
+      new_appt_date:
+        function: null
+        confirm: false
+        prompt: []
+        response:
+          - OK.
+        forget: true
+    entity_groups:
+      appt_date_group:
+        - appt_date
+      birthday_group:
+        - birthday
+      name_group:
+        - name
+      new_appt_group:
+        - new_appt_date
+    success:
+      AND:
+        - API:
+            - appt_date_group
+        - SIMPLE:
+            - birthday_group
+        - SIMPLE:
+            - name_group
+        - SIMPLE:
+            - new_appt_group
+    finish_response:
+      success: []
+      failure: []
+    repeat: false
+    repeat_response: []
+    task_finish_function: null
+    max_turns: 10

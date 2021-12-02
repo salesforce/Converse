@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: txie-auth
+  namespace: sfr-ns-txie
+spec:
+  selector:
+    matchLabels:
+      app: auth-demo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: auth-demo
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: sfr-home-pv-txie
+          persistentVolumeClaim:
+            claimName: sfr-home-pvc-txie
+      containers:
+      - name: tianxie-test
+        image: "gcr.io/salesforce-research-internal/txie-pytorch"
+        command: ["sleep","infinity"]
+        ports:
+        - containerPort: 9001
+        - containerPort: 9002
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+            cpu: "7"
+            memory: "16Gi"
+        volumeMounts:
+          - name: sfr-home-pv-txie
+            mountPath: "/export/home"
+      tolerations:
+      - key: "gpu_num"
+        operator: "Equal"
+        value: "2"
+        effect: "NoSchedule"

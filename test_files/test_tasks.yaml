@@ -1,0 +1,100 @@
+Bot:
+  text_bot: false
+  bot_name: the digital assistant for Northern Trail Information Center
+Task:
+  positive:
+    description: polarity
+    samples:
+      - 'Yes'
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - 'yes please'
+
+  negative:
+    description: polarity
+    samples:
+      - 'No'
+      - Sorry
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+
+  ## Check Weather ##
+  check_weather:
+    description: check local weather
+    samples:
+      - I want to check the weather
+      - weather please
+      - query the weather
+      - query the climate
+      - what is the weather today
+      - is today sunny, cloudy or windy
+      - check the climate
+      - check the weather
+    entities:
+      zip_code:
+        confirm: no
+        function: http://localhost:8001/get_weather
+        prompt:
+        response:
+    entity_groups:
+      entity_group_1:
+        - zip_code
+    success:
+      AND:
+        - API:
+            - entity_group_1
+    repeat: false
+    max_turns: 2
+
+  ## convert inch to centimeter ##
+  convert_inch_to_cm:
+    description: convert inch to centimeter
+    samples:
+      - I want to convert inch to centimeter
+      - convert inch
+      - inch to cm
+    entities:
+      inch:
+        confirm: no
+        function: http://localhost:8001/inch_2_cm
+        prompt:
+        response:
+    entity_groups:
+      entity_group_1:
+        - inch
+    success:
+      AND:
+        - API:
+            - entity_group_1
+    repeat: true
+    max_turns: 10
+
+
+  check_TV_plan_price:
+    description: check tv plan price
+    samples:
+      - I want to check the tv plan price
+      - I don't like my current tv plan
+      - tv plan
+      - I want a new tv plan
+      - tv plan price
+    entities:
+      new_tv_plan:
+        confirm: no
+        function: http://localhost:8001/get_tv_plan
+        prompt:
+        response:
+    entity_groups:
+      entity_group_1:
+        - new_tv_plan
+    success:
+      AND:
+        - API:
+            - entity_group_1
+    repeat: true
+    max_turns: 10

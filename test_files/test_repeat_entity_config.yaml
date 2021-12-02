@@ -1,0 +1,9 @@
+Entity:
+  inch:
+    type:
+      - CARDINAL
+      - QUANTITY
+  zip_code:
+    type: ZIPCODE
+
+

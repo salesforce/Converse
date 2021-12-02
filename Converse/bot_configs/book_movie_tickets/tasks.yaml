@@ -1,0 +1,124 @@
+Bot:
+  text_bot: true
+  bot_name: the digital assistant for Old Movie Theater
+Task:
+  positive:
+    description: polarity
+    samples:
+    - 'Yes'
+    - Sure
+    - correct
+    - No problem
+    - that's right
+    - yes please
+    - affirmative
+    - roger that
+  negative:
+    description: polarity
+    samples:
+    - 'No'
+    - Sorry
+    - No, I don't think so.
+    - I dont know
+    - It's not right
+    - Not exactly
+    - Nothing to do
+    - I forgot my
+    - I forgot it
+    - I don't want to tell you
+  book_movie_tickets:
+    description: book movie tickets at Old Movie Theater
+    samples:
+    - I want to see a movie
+    - I would like to see a movie
+    - I want to buy movie tickets
+    - Can I buy tickets for a movie
+    entities:
+      movie_name:
+        function: collect_info
+        confirm: false
+        prompt:
+          - Which movie do you want to see?
+        response:
+          - Great choice!
+      movie_date:
+        function: collect_info
+        confirm: false
+        prompt:
+          - What date do you prefer?
+        response:
+          - Got it.
+      movie_time:
+        function: collect_info
+        confirm: false
+        prompt:
+          - And what time?
+        response:
+          - Got it.
+      ticket_quantity:
+        function: collect_info
+        confirm: false
+        prompt:
+          - How many tickets do you want to buy?
+        response:
+          - All set.
+    entity_groups:
+      ticket_info_group:
+        - movie_name
+        - movie_date
+        - movie_time
+        - ticket_quantity
+    success:
+      AND:
+        - API:
+            - ticket_info_group
+    finish_response:
+      success:
+        - I booked your tickets. I look forward to seeing you at Old Movie Theater.
+      failure:
+        - Sorry, I am not able to book your tickets.
+    repeat: false
+    repeat_response: []
+    task_finish_function: finish_booking_movie_tickets
+    max_turns: 10
+  movies_in_theater:
+    description: share with you the movies being shown in Old Movie Theater right now
+    samples:
+      - what movies are being shown today?
+      - I want to know what movies are being shown
+      - tell me the movies being shown in the theater
+    entities:
+      inform_movie_names:
+        function: movies_being_shown
+        confirm: false
+        prompt: []
+        response:
+          - <info>
+    entity_groups:
+      movie_name_group:
+        - inform_movie_names
+    success:
+      AND:
+        - INFORM:
+            - movie_name_group
+    finish_response:
+      success: []
+      failure: []
+    repeat: false
+    repeat_response: []
+    task_finish_function: null
+    max_turns: 10
+FAQ:
+  parking:
+    samples:
+    - Do you have any instructions for parking?
+    - Where do I park my car?
+    - Where is the parking lot?
+    - car parking
+    - parking
+    answers:
+    - Convenient, free guest parking is located next to the theater. The entrance to the 7-story
+      parking garage is off California Street, past the front of the theater.
+    question_match_options:
+    - fuzzy_matching
+    - nli

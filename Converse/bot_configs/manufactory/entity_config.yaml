@@ -1,0 +1,28 @@
+Entity:
+  color:
+    type: PICKLIST
+    methods:
+      fuzzy_matching:
+        - white
+        - black
+        - red
+        - pink
+        - yellow
+        - blue
+        - purple
+    suggest_value: yes
+  size:
+    type: PICKLIST
+    methods:
+      fuzzy_matching:
+        - small
+        - medium
+        - large
+        - extra large
+    suggest_value: yes
+  front_text:
+    type: USER_UTT
+    methods: {}
+  back_text:
+    type: USER_UTT
+    methods: {}

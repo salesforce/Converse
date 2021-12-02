@@ -1,0 +1,15 @@
+Models:
+  ner:
+    description: named entity extraction
+    init_args:
+      service_channel: localhost:50051
+    call_args:
+      returnSpan: True
+  intent:
+    description: nli based intent detection
+    init_args:
+      service_channel: localhost:9001
+  negation:
+    description: rule-based negation detection
+    init_args:
+      model_path: "./Converse/bot_configs/negation_model_config"

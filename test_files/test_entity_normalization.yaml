@@ -1,0 +1,61 @@
+Bot:
+  bot_name: the digital assistant for Northern Trail Information Center
+  text_bot: false
+Task:
+  positive:
+    description: polarity
+    samples:
+      - "Yes"
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - "yes please"
+
+  negative:
+    description: polarity
+    samples:
+      - "No"
+      - Sorry
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+
+  ## Make Reservation ##
+  make_reservation:
+    description: make reservation
+    samples:
+      - I want to make a reservation
+      - Is there a table available tonight?
+      - I'd like to make a dinner reservation
+      - Can I make a reservation
+      - I would like to reserve a spot for lunch
+      - Can I make a reservation for next week?
+    entities:
+      date:
+        confirm: yes
+        prompt:
+        function:
+        response:
+          - <info>. Got it.
+      time:
+        confirm: yes
+        prompt:
+        function:
+        response:
+          - <info>. Got it.
+    entity_groups:
+      entity_group_1:
+        - date
+      entity_group_2:
+        - time
+    success:
+      AND:
+        - SIMPLE:
+            - entity_group_1
+        - SIMPLE:
+            - entity_group_2
+    repeat: false
+    max_turns: 5

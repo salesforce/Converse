@@ -1,0 +1,57 @@
+Task:
+
+  user_login:
+    description: ask user name and password to log in
+    entities:
+      user:
+        function: http://localhost:8001/single_step_verify
+        confirm: yes
+        prompt:
+        response:
+      password:
+        function: http://localhost:8001/single_step_verify
+        confirm: no
+        prompt:
+        response:
+    entity_groups:
+      E_user:
+        - user
+      E_password:
+        - password
+    success:
+      AND:
+        - VERIFY:
+            - E_user
+        - VERIFY:
+            - E_password
+        - TASK:
+            - user_security_question
+    confirm:
+    max_turns: 5
+
+  user_security_question:
+    description: ask user securities question to verify
+    entities:
+      hometown:
+        function: http://localhost:8001/single_step_verify
+        confirm: yes
+        prompt:
+        response:
+      best_friend:
+        function: http://localhost:8001/single_step_verify
+        confirm: no
+        prompt:
+        response:
+    entity_groups:
+      E_hometown:
+        - hometown
+      E_best_friend:
+        - best_friend
+    success:
+      OR:
+        - VERIFY:
+            - E_hometown
+        - VERIFY:
+            - E_best_friend
+    confirm:
+    max_turns: 3

@@ -1,0 +1,66 @@
+Bot:
+  bot_name: the digital assistant for Northern Trail Information Center
+  text_bot: false
+Task:
+  positive:
+    description: polarity
+    samples:
+      - 'Yes'
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - 'yes please'
+      - affirmative
+      - roger that
+
+  negative:
+    description: polarity
+    samples:
+      - 'No'
+      - Sorry
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+      - I forgot my
+      - I forgot it
+      - I don't want to tell you
+
+  repeater:
+    description: test your repeater
+    samples:
+      - I want to test my repeater
+      - does my repeater work
+      - I like my repeater
+    entities:
+      brand:
+        function:
+        confirm: no
+        prompt:
+          - What is your repeater's brand?
+        response:
+          - <info>. Got it.
+      utterance:
+        function:
+        confirm: no
+        prompt:
+          - Just say something, please.
+        response:
+          - <info>.
+    entity_groups:
+      entity_group_1:
+        - brand
+      entity_group_2:
+        - utterance
+    success:
+      AND:
+        - SIMPLE:
+            - entity_group_1
+        - SIMPLE:
+            - entity_group_2
+    repeat: true
+    repeat_response:
+      - Would you like to let it repeat again?
+    max_turns: 10

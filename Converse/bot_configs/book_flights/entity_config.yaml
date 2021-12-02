@@ -1,0 +1,53 @@
+Entity:
+  application_number:
+    type:
+      - STRING
+      - CARDINAL
+    methods:
+      ner:
+      regex: \d{7}
+  action:
+    type: USER_UTT
+    methods:
+      user_utterance:
+  name:
+    type: USER_UTT
+    methods:
+      user_utterance:
+  security_question:
+    type: USER_UTT
+    methods:
+      user_utterance:
+  auth_code:
+    type: STRING
+    methods:
+      ner:
+      regex: \d{4}
+  origin:
+    type: AP/LOCATION
+  destination:
+    type: AP/LOCATION
+  start_date:
+    type: DATE
+  end_date:
+    type: DATE
+  passenger_num:
+    type:
+      - QUANTITY
+      - CARDINAL
+  fare_class:
+    type: PICKLIST
+    methods:
+      fuzzy_matching:
+        - First
+        - Business
+        - Economy
+  flight_info_departing:
+    type: USER_UTT
+  flight_choice_departing:
+    type: USER_UTT
+  flight_info_returning:
+    type: USER_UTT
+  flight_choice_returning:
+    type: USER_UTT
+

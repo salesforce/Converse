@@ -1,0 +1,134 @@
+Bot:
+  text_bot: true
+  bot_name: the digital assistant for Ushirt Factory
+Task:
+  positive:
+    description: polarity
+    samples:
+    - 'Yes'
+    - Sure
+    - correct
+    - No problem
+    - that's right
+    - yes please
+    - affirmative
+    - roger that
+  negative:
+    description: polarity
+    samples:
+    - 'No'
+    - Sorry
+    - No, I don't think so.
+    - I dont know
+    - It's not right
+    - Not exactly
+    - Nothing to do
+    - I forgot my
+    - I forgot it
+    - I don't want to tell you
+  customize_tshirt:
+    description: customize your T-shirts
+    samples:
+      - I want to order T-shirts.
+      - I want to order a shirt.
+      - I want to customize a t shirt.
+      - can I customize tshirt?
+      - order tshirts
+    entities:
+      color:
+        function: collect_info
+        confirm: false
+        prompt:
+          - Which color do you prefer?
+        response:
+          - Wonderful choice.
+      size:
+        function: collect_info
+        confirm: false
+        prompt:
+          - What size do you want?
+        response:
+          - Great!
+      front_text:
+        function: collect_info
+        confirm: false
+        prompt:
+          - What text do you want to print on the front side of the T-shirt?
+        response:
+          - Got it.
+      back_text:
+        function: collect_info
+        confirm: false
+        prompt:
+          - What text do you want to print on the back side?
+        response:
+          - OK.
+    entity_groups:
+      color_size_group:
+        - color
+        - size
+      front_text_group:
+        - front_text
+      back_text_group:
+        - back_text
+    success:
+      AND:
+        - API:
+            - front_text_group
+        - API:
+            - back_text_group
+        - API:
+            - color_size_group
+    finish_response:
+      success:
+        - <info>
+      failure: []
+    repeat: false
+    repeat_response: []
+    task_finish_function: finish_order_tshirts
+    max_turns: 10
+  change_color:
+    description: change the shirt color
+    samples:
+      - I want to change the shirt color
+      - change it to color
+      - change the color to color
+      - the color is too bright
+      - can I change the color
+    entities:
+      color:
+        function: collect_info
+        confirm: false
+        prompt:
+          - What do you want the new color to be?
+        response:
+          - Definitely. I have changed the color.
+        forget: true
+    entity_groups:
+      color_group:
+        - color
+    success:
+      AND:
+        - TASK:
+            - customize_tshirt
+        - API:
+            - color_group
+    finish_response:
+      success:
+        - <info>
+      failure: []
+    repeat: false
+    repeat_response: []
+    task_finish_function: finish_order_tshirts
+    max_turns: 10
+FAQ:
+  unisex:
+    samples:
+      - Is it unisex?
+      - Is the T-shirt unisex?
+      - Is the shirt unisex?
+    answers:
+      - Yes, it is unisex.
+    question_match_options:
+      - fuzzy_matching
+      - nli

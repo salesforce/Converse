@@ -1,0 +1,77 @@
+Entity:
+  inch:
+    type: CARDINAL
+    methods:
+      ner:
+      spelling:
+  symbol:
+    type: PRODUCT
+    methods:
+      ner:
+      spelling:
+  zip_code:
+    type: CARDINAL
+    methods:
+      regex: \d{5}
+      spelling:
+      ner:
+    # hints:
+    #   type: int
+    #   regex: \d{5}
+    #   error_message: The zipcode is a 5 digits number, could you please provide your zipcode?
+  new_tv_plan:
+    type: PICKLIST
+    methods:
+      fuzzy_matching:
+        - hulu live
+        - fubo tv
+        - pluto tv
+  # The entities below are used to test type2class and default extraction methods
+  cardinal:
+    type: CARDINAL
+  date:
+    type: DATE
+  email:
+    type: EMAIL
+  event:
+    type: EVENT
+  fac:
+    type: FAC
+  language:
+    type: LANGUAGE
+  law:
+    type: LAW
+  ap/location:
+    type: AP/LOCATION
+  money:
+    type: MONEY
+  norp:
+    type: NORP
+  ordinal:
+    type: ORDINAL
+  org:
+    type: ORG
+  percent:
+    type: PERCENT
+  person:
+    type: PERSON
+  duckling/phone-number:
+    type: DUCKLING/phone-number
+  picklist:
+    type: PICKLIST
+  product:
+    type: PRODUCT
+  quantity:
+    type: QUANTITY
+  time:
+    type: TIME
+  duckling/url:
+    type: DUCKLING/url
+  user_utt:
+    type: USER_UTT
+  work_of_art:
+    type: WORK_OF_ART
+  zipcode:
+    type: ZIPCODE
+  string:
+    type: STRING

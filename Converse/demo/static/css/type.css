@@ -1,0 +1,388 @@
+img.image {
+    max-height: 80px;
+}
+
+body {
+    /*
+    font-size: .875em;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    */
+    font-family: Courier;
+}
+
+.selected {
+    border: 1px solid #333;
+}
+
+#history {
+
+    width: 210px;
+}
+
+.hidden {
+    display: none;
+}
+
+.remove {
+    /*
+    background-image: url('image/delete.gif');
+    */
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+.showdelete {
+    width: 120px;
+    float: right;
+
+}
+
+.batch {
+    width: 400px;
+    float: left;
+}
+
+.alert {
+    padding: 5px;
+    margin-bottom: 0px;
+}
+
+.alert-dismissable .close, .alert-dismissible .close {
+    right: 0px;
+}
+
+/*
+ol#tree >li> label, ol#tree >li.fold:before{
+        display:none;
+}
+*/
+
+
+div #typeform li {
+    list-style: none;
+}
+
+textarea {
+    /*
+        width:800px;
+        height:600px;
+    */
+}
+
+#formheader li {
+    padding-left: 3px;
+}
+
+div.type li > span {
+    display: inline-block;
+}
+
+li > span > input[type = 'text'] {
+    width: 115px;
+}
+
+span.overview, span.report, span.edit, span.compile {
+    display: inline-block;
+    width: 19px;
+    margin: 2px;
+}
+
+span.type {
+    display: inline-block;
+    width: 95px;
+}
+
+span.name {
+    display: inline-block;
+    width: 110px;
+}
+
+span.data {
+    display: inline-block;
+    width: 180px;
+
+}
+
+li > span.data > input {
+    width: 185px;
+}
+
+li > span.clss {
+    display: inline-block;
+    width: 110px;
+}
+
+div.type li > span.notes {
+    display: inline-block;
+    display: none;
+}
+
+@media (min-width: 768px) {
+
+    div.type li > span.notes {
+        display: inline-block;
+        width: 110px;
+    }
+}
+
+span.handle {
+    width: 8px;
+    cursor: pointer;
+}
+
+select.typeselect {
+    width: 100px;
+}
+
+ol#formfields li.field {
+    width: 900px;
+    margin-bottom: 5px;
+    padding-left: 0px;
+}
+
+div.content ol {
+    padding-left: 0px;
+}
+
+input#form_node_id, input#content_node_id, input#content_id {
+    width: 220px;
+}
+
+@media screen and (max-width: 480px) {
+    ol#formfields li.field {
+        width: 400px;
+    }
+
+    li > span.data {
+        margin-left: 20px;
+    }
+
+    #typeform input, #typeform textarea {
+        width: 100%;
+    }
+
+    .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+        width: 100%;
+    }
+
+}
+
+.nav > li > a {
+    padding: 5px 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+
+ol#tree {
+    margin: 35px 0px 100px -20px;
+}
+
+#typeform label {
+    /*
+    width:15%;
+    */
+}
+
+#typeform {
+    margin-top: 20px;
+}
+
+#typeform .checkbox, #typeform .radio, #typeform input, #typeform textarea {
+    display: inline-block;
+}
+
+#typeform input, #typeform textarea {
+    /*
+        width:83%;
+    */
+}
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    /*
+        width:83%;
+    */
+}
+
+#typeform .cke_chrome {
+    display: inline-block;
+}
+
+.filename {
+    position: fixed;
+    bottom: 0;
+    background-color: white;
+    margin-left: 3px;
+}
+
+#fieldset label {
+    height: 30px;
+    margin-bottom: 0px;
+}
+
+#fieldset label span {
+    vertical-align: top;
+}
+
+#logoutbtn, #dlbtn, #ulbtn {
+    float: right;
+    margin-left: 8px;
+}
+
+
+#logoutbtn svg, #dlbtn svg, #ulbtn svg {
+    color: white;
+    top: 2px;
+    position: relative;
+}
+
+.search {
+    width: 200px;
+    height: 31px;
+    display: inline-block;
+    float: right;
+}
+
+.input-group.search input.form-control {
+    width: 160px;
+    height: 31px;
+}
+
+.search .input-group-btn .btn {
+    width: 38px;
+    height: 31px;
+}
+
+
+#search_result {
+    margin-top: 20px;
+}
+
+#result div.item {
+    margin-bottom: 20px;
+}
+
+#result span {
+    background-color: yellow;
+}
+
+
+pre {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+/* textarea is used to display list*/
+textarea {
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow-x: scroll;
+}
+
+
+.navbar-fixed-bottom {
+    height: 30px;
+    padding-top: 8px;
+    padding-left: 12px;
+    min-height: 38px;
+}
+
+
+#next, #new, #saveall {
+    float: right;
+    margin-right: 6px;
+    height: 24px;
+    padding: 1px 12px;
+}
+
+
+.input-xs {
+    height: 22px;
+    padding: 5px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+
+#logic_input {
+    display: inline-block;
+    width: 200px;
+    position: relative;
+    top: 8px;
+}
+
+.btn-group.bootstrap-select {
+    display: block !important;
+    margin-top: 6px;
+    height: 30px;
+}
+
+.multiselect-native-select {
+    display: block !important;
+    margin-bottom: 6px;
+    height: 30px;
+}
+
+
+label img.delete {
+    cursor: pointer;
+    color: grey;
+}
+
+.multiselect {
+    margin-bottom: 12px;
+}
+
+
+.multiselect .multiselect-container {
+    padding: 4px 4px 4px 30px;
+}
+
+
+#typeform .rename-control input {
+    width: 200px;
+}
+
+.rename-control {
+    display: inline-block;
+    width: 300px;
+}
+
+.info {
+    display: inline-block;
+    width: 400px;
+    height: 26px;
+    position: relative;
+    z-index: 90;
+}
+
+.info svg {
+    color: #777;
+    width: 10px;
+}
+
+
+.info .tip {
+    position: absolute;
+    top: 0px;
+    left: 30px;
+    border: none;
+    background-color: #eee;
+    padding: 4px 10px;
+    border-radius: 4px;
+    color: #777;
+    display: none;
+    font-weight: normal;
+    font-size: 10px;
+
+}

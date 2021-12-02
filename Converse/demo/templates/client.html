@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .row {
+            margin:0px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="head">
+    <h1>{{bot_name}}</h1>
+    <span id="msg" style="line-height:46px;"></span>
+    <div id='btns'>
+        <button class='btn btn-primary' id='reset'>Reset</button>
+        <button class='btn btn-primary' id='toggle_tree'></button>
+        <button class='btn btn-primary' id='toggle_chat'></button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="tree col col-7 ">
+        <iframe name="tree" id="tree" src="" frameborder="0" scrolling="yes" align="left"></iframe>
+    </div>
+    <div class="chat col col-3 ">
+        <iframe id="chat" src="/chat" frameborder="0" scrolling="yes" align="right"></iframe>
+    </div>
+
+</div>
+</div>
+<script type="text/javascript">
+    let src = '';
+    let cid = '';
+    var change_iframe_src = function (id) {
+        cid = id;
+        src = '/dialog_status/' + id;
+        $("#tree").attr('src', src);
+    }
+
+    $('#reset').on('click', function () {
+        $.ajax({
+            url: '/reset',
+            method: 'POST',
+            data: JSON.stringify({cid: cid}),
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (rsp) {
+                console.log(rsp);
+                if (rsp.status == "ok") {
+
+                    $('#msg').html("Reset succeed, page will reload in 3 seconds");
+                    $('#msg').css('color', 'blue');
+                    setTimeout(function () {
+                        location.reload();
+                    }, 3000);
+                } else {
+                    let m = rsp.msg.split("ValueError:");
+                    let msg = '';
+                    if (m.length > 1) {
+                        msg = m[1];
+                    }
+
+                    $('#msg').html("Failed loading yaml file, \n" + msg);
+                    $('#msg').css('color', 'red');
+                }
+            }
+        });
+    });
+
+    $('#toggle_tree').click(function (e) {
+        e.preventDefault();
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active');
+            $('.tree').hide();
+            $('.tree').removeClass('col-7');
+            $('.chat').removeClass('col-3');
+            $('.chat').addClass('col-10');
+            if ($('#toggle_chat').hasClass('active')) {
+                $("#tree").attr('src', src);
+            } else //switch to chat
+            {
+                $('.chat').show();
+                $('#toggle_chat').addClass('active')
+            }
+        } else {
+            $('.tree').show();
+            $(this).addClass('active');
+            $('.chat').removeClass('col-10');
+            $('.tree').removeClass('col-10');
+            $('.tree').addClass('col-7');
+            $('.chat').addClass('col-3');
+            $("#tree").attr('src', src);
+        }
+        return false;
+    });
+
+    $('#toggle_chat').click(function (e) {
+        e.preventDefault();
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active');
+            $('.chat').hide();
+            $('.chat').removeClass('col-3');
+            $('.tree').removeClass('col-7');
+            $('.tree').addClass('col-10');
+            if ($('#toggle_tree').hasClass('active')) {
+            } else {
+                $('.tree').show();
+                $('#toggle_tree').addClass('active')
+            }
+            $("#tree").attr('src', src);
+        } else {
+            $('.chat').show();
+            $(this).addClass('active');
+            $('.tree').removeClass('col-10');
+            $('.tree').addClass('col-7');
+            $('.chat').removeClass('col-10');
+            $('.chat').addClass('col-3');
+            $("#tree").attr('src', src);
+        }
+        return false;
+    });
+
+    let offset = 50;
+    $("#tree").height(window.innerHeight - offset);
+    $("#chat").height(window.innerHeight - offset);
+
+    window.onresize = function () {
+        $("#tree").height(window.innerHeight - offset);
+        $("#chat").height(window.innerHeight - offset);
+        $("#tree").attr('src', src);
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+Entity:
+  appt_date:
+    type: DATE
+    methods:
+      ner:
+  birthday:
+    type: DATE
+    methods:
+      ner:
+  name:
+    type: PERSON
+    methods:
+      ner:
+  new_appt_date:
+    type: DATE
+    methods:
+      ner:

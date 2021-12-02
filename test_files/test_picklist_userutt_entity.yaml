@@ -1,0 +1,13 @@
+Entity:
+  brand:
+    type: PICKLIST
+    methods:
+      fuzzy_matching:
+        - A
+        - AA
+        - AAPL
+        - AAA
+  utterance:
+    type: USER_UTT
+    methods:
+      user_utterance:

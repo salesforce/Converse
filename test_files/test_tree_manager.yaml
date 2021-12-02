@@ -1,0 +1,178 @@
+Task:
+  ## Verify ##
+  verify_user:
+    description: pull up your account
+    entities:
+      email_address:
+        function: http://localhost:8001/single_step_verify
+        confirm: yes
+        prompt:
+        response:
+      zip_code:
+        function: http://localhost:8001/single_step_verify
+        confirm: no
+        prompt:
+        response:
+    entity_groups:
+      entity_group_1:
+        - email_address
+      entity_group_2:
+        - zip_code
+    success:
+      AND:
+        - VERIFY:
+            - entity_group_1
+        - VERIFY:
+            - entity_group_2
+    confirm:
+    max_turns: 5
+
+  fake_user:
+    description: pull up your account
+    entities:
+      email_address:
+        function: http://localhost:8001/single_step_verify
+        confirm: yes
+        prompt:
+        response:
+      zip_code:
+        function: http://localhost:8001/single_step_verify
+        confirm: no
+        prompt:
+        response:
+    entity_groups:
+      entity_group_1:
+        - email_address
+      entity_group_2:
+        - zip_code
+    success:
+      AND:
+        - VERIFY:
+            - entity_group_1
+        - VERIFY:
+            - entity_group_2
+    confirm:
+    max_turns: 5
+
+  ## Check ##
+  check_order:
+    description: check your order status
+    samples:
+      - I have not received the ordered item yet
+      - The ordered item has not yet delivered
+      - is my ordered item on the way?
+    entities:
+      order_status:
+        function: http://localhost:8001/get_order_status
+        confirm:
+        prompt:
+        response:
+          - One moment please. Your order status is <info>.
+      test entity a:
+        function:
+        confirm: no
+        prompt:
+        response:
+      test entity b:
+        function:
+        confirm: no
+        prompt:
+        response:
+      test entity c:
+        function:
+        confirm: no
+        prompt:
+        response:
+      test entity31:
+        function:
+        confirm: no
+        prompt:
+        response:
+      test entity32:
+        function:
+        confirm: no
+        prompt:
+        response:
+      test entity41:
+        function:
+        confirm: no
+        prompt:
+        response:
+      test entity51:
+        function:
+        confirm: no
+        prompt:
+        response:
+      test entity61:
+        function:
+        confirm: no
+        prompt:
+        response:
+      test entity62:
+        function:
+        confirm: no
+        prompt:
+        response:
+    entity_groups:
+      entity_group_1:
+        - order_status
+      entity_group_2:
+        - test entity a
+        - test entity b
+        - test entity c
+      entity_group_3:
+        - test entity31
+        - test entity32
+      entity_group_4:
+        - test entity41
+      entity_group_5:
+        - test entity51
+      entity_group_6:
+        - test entity61
+        - test entity62
+    success:
+      AND:
+          - AND:
+            - TASK:
+                - fake_user
+            - OR:
+              - INFORM:
+                  - entity_group_2#2
+              - VERIFY:
+                  - entity_group_4
+          - OR:
+            - VERIFY:
+                - entity_group_3
+            - VERIFY:
+                - entity_group_6
+          - INFORM:
+            - entity_group_5
+    confirm:
+    max_turns: 10
+
+  ## Update ##
+  update_order:
+    description: add more to your order
+    samples:
+      - Please add more items to my order
+      - Please add another item to my order
+      - Can you add more to my order
+    entities:
+      quantity:
+        function: http://localhost:8001/add_more_to_order
+        confirm: yes
+        prompt:
+          - How many do you want to add?
+        response:
+          - Got it. Now you have ordered <info> pieces.
+    entity_groups:
+      entity_group_1:
+        - quantity
+    success:
+      AND:
+        - TASK:
+            - fake_user
+        - UPDATE:
+            - entity_group_1
+    confirm:
+    max_turns: 10

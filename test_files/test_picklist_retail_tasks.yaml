@@ -1,0 +1,78 @@
+Bot:
+  bot_name: the digital assistant for Northern Trail Information Center
+  text_bot: false
+Task:
+  positive:
+    description: polarity
+    samples:
+      - 'Yes'
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - 'yes please'
+      - affirmative
+      - roger that
+
+  negative:
+    description: polarity
+    samples:
+      - 'No'
+      - Sorry
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+      - I forgot my
+      - I forgot it
+      - I don't want to tell you
+
+  ## Refund ##
+  get_refund:
+    description: get a refund for your order
+    samples:
+      - get a refund
+      - I want a refund
+      - refund please
+      - Can I get a refund?
+      - Can you refund me my money?
+    entities:
+      oid:
+        function: http://localhost:8001/query_order
+        confirm: no
+        prompt:
+          - Please provide your order id for your order details.
+        response:
+          - "One moment please. Here are the details of your order: <info>."
+      cancellation_reason:
+        function: http://localhost:8001/query_order
+        confirm: no
+        prompt:
+          - What is the reason that you decided to cancel your order? 1) It took too long to deliver. 2) I no longer needed the item. 3) Something else.
+        response:
+          - "One moment please. Here are the details of your order: <info>."
+      refund_method:
+        function: http://localhost:8001/query_order
+        confirm: no
+        prompt:
+          - How would you like the refund? In store credit or returned to the credit card on which you made the purchase?
+        response:
+          - "One moment please. Here are the details of your order: <info>."
+    entity_groups:
+      entity_group_1:
+        - oid
+      entity_group_2:
+        - cancellation_reason
+      entity_group_3:
+        - refund_method
+    success:
+      AND:
+        - SIMPLE:
+          - entity_group_1
+        - SIMPLE:
+          - entity_group_2
+        - SIMPLE:
+          - entity_group_3
+    repeat: true
+    max_turns: 10

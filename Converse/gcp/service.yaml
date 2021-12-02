@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: txie-auth
+spec:
+  type: LoadBalancer
+  selector:
+    app: auth-demo
+  ports:
+    - name: auth
+      port: 9001
+      targetPort: 9001
+    - name: dial
+      port: 9002
+      targetPort: 9002

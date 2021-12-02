@@ -1,0 +1,33 @@
+Task:
+  health_appointment:
+    description: make an appointment at Stanford Health Care
+    samples:
+      - I want to see a doctor
+      - I don't feel so good
+      - I would like to make an appointment
+      - I want to make an appointment
+      - I got a fever
+    entities:
+      department:
+        function: collect_info
+        confirm: no
+        prompt:
+          - Which department do you want to make the appointment with?
+        response:
+    entity_groups:
+      entity_group_1:
+        - department
+    success:
+      AND:
+        - INSERT:
+            - entity_group_1
+    finish_response:
+      success:
+        - I have booked an appointment for you.
+      failure:
+        - Sorry, I can't help you book an appointment.
+    task_finish_function: create_appointment
+    repeat: true
+    repeat_response:
+      - Would you like to make another appointment?
+    max_turns: 10

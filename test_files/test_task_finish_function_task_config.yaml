@@ -1,0 +1,79 @@
+Bot:
+  bot_name: the digital assistant for Northern Trail Information Center
+  text_bot: false
+Task:
+  positive:
+    description: polarity
+    samples:
+      - 'Yes'
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - 'yes please'
+      - affirmative
+      - roger that
+
+  negative:
+    description: polarity
+    samples:
+      - 'No'
+      - Sorry
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+      - I forgot my
+      - I forgot it
+      - I don't want to tell you
+
+  health_appointment:
+    description: make an appointment at Stanford Health Care
+    samples:
+      - I want to see a doctor
+      - I don't feel so good
+      - I would like to make an appointment
+      - I want to make an appointment
+      - I got a fever
+    entities:
+      appt_date:
+        function: collect_info
+        confirm: no
+        prompt:
+          - What's your preferred date for the appointment?
+        response:
+      appt_time:
+        function: collect_info
+        confirm: no
+        prompt:
+          - At what time?
+        response:
+      doctor_name:
+        function: collect_info
+        confirm:
+        prompt:
+        response:
+    entity_groups:
+      entity_group_1:
+        - appt_date
+        - appt_time
+      entity_group_2:
+        - doctor_name
+    success:
+      AND:
+        - INSERT:
+          - entity_group_1
+        - INSERT:
+          - entity_group_2
+    finish_response:
+      success:
+        - I have booked an appointment for you.
+      failure:
+        - Sorry, I can't help you book an appointment.
+    task_finish_function: create_appointment
+    repeat: true
+    repeat_response:
+      - Would you like to make another appointment?
+    max_turns: 10
+

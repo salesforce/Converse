@@ -1,0 +1,24 @@
+user:
+
+  - uid: 1
+    name: Peter Parker
+    phone_number: "1234567890"
+    email_address: peterparker@gmail.com
+    zip_code: "94301"
+    address: 123 street Forest Hills
+
+order:
+
+  - oid: 1
+    uid: 1
+    delivery_address: 123 street Forest Hills
+    product: pizza
+    quantity: 10
+    order_status: placed but not yet shipped
+
+  - oid: 2
+    uid: 1
+    delivery_address: 123 street Forest Hills
+    product: apple
+    quantity: 20
+    order_status: shipped

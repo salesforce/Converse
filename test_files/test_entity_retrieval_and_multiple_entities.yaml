@@ -1,0 +1,118 @@
+Bot:
+  bot_name: the digital assistant for Northern Trail Information Center
+  text_bot: false
+Task:
+  positive:
+    description: polarity
+    samples:
+      - "Yes"
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - "yes please"
+
+  negative:
+    description: polarity
+    samples:
+      - "No"
+      - Sorry
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+
+  ## Verify ##
+  verify_user:
+    description: pull up your account
+    samples:
+    entities:
+      email_address:
+        function: http://localhost:8001/single_step_verify
+        confirm: yes
+        prompt:
+        response:
+      zip_code:
+        function: http://localhost:8001/single_step_verify
+        confirm: no
+        prompt:
+        response:
+    entity_groups:
+      entity_group_1:
+        - email_address
+      entity_group_2:
+        - zip_code
+    success:
+      AND:
+        - VERIFY:
+            - entity_group_1
+        - VERIFY:
+            - entity_group_2
+    repeat: false
+    max_turns: 8
+
+  ## Check ##
+  check_order:
+    description: check your order status
+    samples:
+      - I have not received the ordered item yet
+      - The ordered item has not yet delivered
+      - is my ordered item on the way?
+      - i want to check order
+      - my order status
+      - check order status
+      - order status
+    entities:
+      order_status:
+        function: http://localhost:8001/get_order_status
+        confirm:
+        prompt:
+        response:
+          - One moment please. Your order status is <info>.
+    entity_groups:
+      entity_group_1:
+        - order_status
+    success:
+      AND:
+        - TASK:
+            - verify_user
+        - INFORM:
+            - entity_group_1
+    finish_response:
+      success:
+        - That is all the information that I have on your order status.
+      failure:
+        - Sorry, I can't help you check your order status.
+    repeat: False
+    max_turns: 10
+
+  ## Check Weather ##
+  check_weather:
+    description: check local weather
+    samples:
+      - I want to check the weather
+      - weather please
+      - query the weather
+      - query the climate
+      - what is the weather today
+      - is today sunny, cloudy or windy
+      - check the climate
+      - check the weather
+    entities:
+      zip_code:
+        confirm: no
+        prompt:
+        function: funcGetWeather
+        response:
+    entity_groups:
+      entity_group_1:
+        - zip_code
+    success:
+      AND:
+        - API:
+            - entity_group_1
+    repeat: True
+    repeat_response:
+      - Would you like to check the weather for another zip code?
+    max_turns: 2

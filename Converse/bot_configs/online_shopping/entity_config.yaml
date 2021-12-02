@@ -1,0 +1,19 @@
+Entity:
+  quantity:
+    type: CARDINAL
+    methods:
+      ner:
+  oid:
+    type: CARDINAL
+    methods:
+      ner:
+  email_address:
+    type: EMAIL
+    methods:
+      ner:
+      spelling:
+  zip_code:
+    type: ZIPCODE
+    methods:
+      ner:
+      spelling:

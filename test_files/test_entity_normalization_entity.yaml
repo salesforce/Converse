@@ -1,0 +1,9 @@
+Entity:
+  date:
+    type: DATE
+    methods:
+      ner:
+  time:
+    type: TIME
+    methods:
+      ner:

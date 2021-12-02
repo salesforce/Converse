@@ -1,0 +1,128 @@
+Bot:
+  text_bot: true
+  bot_name: the digital assistant for berich bank
+Task:
+  positive:
+    description: polarity
+    samples:
+    - 'Yes'
+    - Sure
+    - correct
+    - No problem
+    - that's right
+    - yes please
+    - affirmative
+    - roger that
+  negative:
+    description: polarity
+    samples:
+    - 'No'
+    - Sorry
+    - No, I don't think so.
+    - I dont know
+    - It's not right
+    - Not exactly
+    - Nothing to do
+    - I forgot my
+    - I forgot it
+    - I don't want to tell you
+  verify_user:
+    description: verify your identity
+    samples: []
+    entities:
+      name:
+        function: get_name_and_welcome
+        confirm: false
+        prompt:
+          - What's your name?
+        response:
+          - <info>.
+      card_number:
+        function: verify_credit_card
+        confirm: false
+        prompt:
+          - May I have your credit card number?
+        response: []
+      zip_code:
+        function: verify_zip_code
+        confirm: false
+        prompt:
+          - Could you please confirm the zip code of your primary address?
+        response: []
+    entity_groups:
+      identity_group:
+        - name
+        - card_number
+        - zip_code
+    success:
+      AND:
+        - VERIFY:
+            - identity_group
+    finish_response:
+      success:
+        - Perfect. I pulled up your account.
+      failure:
+        - Sorry, I am not able to verify your identity.
+    repeat: false
+    repeat_response: []
+    task_finish_function: null
+    max_turns: 10
+  credit_card_not_working:
+    description: resolve your credit card issues
+    samples:
+      - my credit card is not working
+      - my credit card does not go through
+      - I am not able to make payments using my credit card
+    entities:
+      reason:
+        function: inform_the_credit_card_issue
+        confirm: false
+        prompt: []
+        response:
+          - <info>
+    entity_groups:
+      reason_group:
+        - reason
+    success:
+      AND:
+        - TASK:
+            - verify_user
+        - INFORM:
+            - reason_group
+    finish_response:
+      success: []
+      failure: []
+    repeat: false
+    repeat_response: []
+    task_finish_function: null
+    max_turns: 15
+  check_balance:
+    description: check your credit card balance
+    samples:
+      - what is the balance that I need to pay?
+      - how much do I need to pay?
+      - what is the current balance
+      - check the balance
+    entities:
+      remaining_balance:
+        function: get_remaining_balance
+        confirm: false
+        prompt: []
+        response:
+          - <info>
+    entity_groups:
+      balance_due_group:
+        - remaining_balance
+    success:
+      AND:
+        - TASK:
+            - verify_user
+        - INFORM:
+            - balance_due_group
+    finish_response:
+      success: []
+      failure: []
+    repeat: false
+    repeat_response: []
+    task_finish_function: null
+    max_turns: 10

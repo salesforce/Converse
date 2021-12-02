@@ -1,0 +1,31 @@
+Bot:
+  bot_name: "the digital assistant for Inn: The Cloud"
+  text_bot: false
+Task:
+  ## Verify user ##
+  verify_user:
+    description: verify that you are in our database
+    entities:
+      email_address:
+        function: http://localhost:8001/single_step_verify
+        confirm: yes
+        prompt:
+        response:
+      zip_code:
+        function: http://localhost:8001/single_step_verify
+        confirm: no
+        prompt:
+        response:
+    entity_groups:
+      entity_group_1:
+        - email_address
+      entity_group_2:
+        - zip_code
+    success:
+      AND:
+        - VERIFY:
+            - entity_group_1
+        - VERIFY:
+            - entity_group_2
+    confirm:
+    max_turns: 5

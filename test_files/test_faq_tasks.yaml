@@ -1,0 +1,262 @@
+Bot:
+  text_bot: true
+  bot_name: Converse demo bot
+Task:
+  positive:
+    description: polarity
+    samples:
+      - "Yes"
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - "yes please"
+      - affirmative
+      - roger that
+
+  negative:
+    description: polarity
+    samples:
+      - "No"
+      - Sorry
+      - don't have it
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+      - I forgot my
+      - I forgot it
+      - I don't want to tell you
+
+  check_application_status:
+    description: get application info
+    samples:
+      - check application status
+      - check my application
+      - what's my application status
+      - how is my application going
+      - is there any update on my application status
+    entities:
+      application_number:
+        function: check_application_status_by_number
+        confirm: no
+        response:
+          - <info>
+      action:
+        function: check_condition_helpful
+        confirm: no
+        prompt:
+          - What would you like to do?
+        response:
+          - <info>
+    entity_groups:
+      entity_group_1:
+        - application_number
+      entity_group_2:
+        - action
+    success:
+      AND:
+        - OR:
+            - API:
+                - entity_group_1
+            - TASK:
+                - authentication
+        - API:
+            - entity_group_2
+    finish_response:
+      success:
+        - ""
+      failure:
+        - ""
+    repeat: false
+    max_turns: 10
+
+  authentication:
+    description: authenticate the name and security question
+    entities:
+      name:
+        function: verify_name_for_checking_application
+        confirm: no
+        prompt:
+          - What's your first and last name?
+        response:
+      security_question:
+        function: verify_security_question
+        confirm: no
+        prompt:
+          - And what's the make and model of your first car?
+        response:
+      auth_code:
+        function: check_application_status_by_auth
+        confirm: no
+        prompt:
+          - I'm sending a code to the email address associated with your account. When you're ready, please share the code with me here.
+        response:
+    entity_groups:
+      entity_group_1:
+        - name
+      entity_group_2:
+        - security_question
+      entity_group_3:
+        - auth_code
+    success:
+      AND:
+        - API:
+            - entity_group_1
+        - API:
+            - entity_group_2
+        - API:
+            - entity_group_3
+    finish_response:
+      success:
+        - ""
+      failure:
+        - Sorry, I'm not able to authenticate you.
+    repeat: False
+    max_turns: 10
+
+  book_a_flight:
+    description: book a flight
+    samples:
+      - book a flight
+      - I would like to book a flight
+      - I want to book a flight from somewhere to somewhere
+      - check flight from somewhere to somewhere
+    entities:
+      origin:
+        function: collect_info
+        confirm: no
+        prompt:
+          - Where is the origin?
+      destination:
+        function: collect_info
+        confirm: no
+        prompt:
+          - Where is the destination?
+        retrieve: false
+      start_date:
+        function: collect_info
+        confirm: no
+        prompt:
+          - When will your trip start?
+      end_date:
+        function: collect_info
+        confirm: no
+        prompt:
+          - When will you go back?
+      passenger_num:
+        function: collect_info
+        confirm: no
+        prompt:
+          - How many passengers?
+      fare_class:
+        function: collect_info
+        confirm: no
+        prompt:
+          - And which fare class? (e.g., Economy, Business, First)
+      flight_info_departing:
+        function: search_departuring_flight
+        confirm: no
+        prompt:
+        response:
+          - <info>
+      flight_choice_departing:
+        function: choose_flight_departing
+        confirm: no
+        prompt:
+          - Which one do you prefer?
+        response:
+          - <info>
+      flight_info_returning:
+        function: search_returning_flight
+        confirm: no
+        prompt:
+        response:
+          - <info>
+      flight_choice_returning:
+        function: choose_flight_returning
+        confirm: no
+        prompt:
+          - Which one do you prefer?
+        response:
+          - <info>
+
+    entity_groups:
+      entity_group_1:
+        - origin
+      entity_group_2:
+        - destination
+      entity_group_3:
+        - start_date
+      entity_group_4:
+        - end_date
+      entity_group_5:
+        - passenger_num
+      entity_group_6:
+        - fare_class
+      entity_group_7:
+        - flight_info_departing
+      entity_group_8:
+        - flight_choice_departing
+      entity_group_9:
+        - flight_info_returning
+      entity_group_10:
+        - flight_choice_returning
+    success:
+      AND:
+        - INSERT:
+            - entity_group_1
+        - INSERT:
+            - entity_group_2
+        - INSERT:
+            - entity_group_3
+        - INSERT:
+            - entity_group_4
+        - INSERT:
+            - entity_group_5
+        - INSERT:
+            - entity_group_6
+        - INFORM:
+            - entity_group_7
+        - INSERT:
+            - entity_group_8
+        - INFORM:
+            - entity_group_9
+        - INSERT:
+            - entity_group_10
+    finish_response:
+      success:
+        - OK, I'm going to connect you to an agent to process the credit card for privacy reasons. One moment, please.
+      failure:
+        - Sorry, I cannot help you to find a flight. I'm going to connect you to an agent. One moment, please.
+    repeat: false
+    max_turns: 30
+
+FAQ:
+  learn_about_salesforce_AI_research:
+    samples:
+      - Could you tell me about Salesforce AI research team?
+      - tell me about Salesforce AI research team
+      - what projects does salesforce AI research team work on?
+      - what projects are salesforce researchers working on?
+      - I would like to know Salesforce research projects
+    answers:
+      - OK, here's what I found - https://einstein.ai/mission.
+    question_match_options:
+      - fuzzy_matching
+      - nli
+  job:
+    samples:
+      - where can I find job opportunities in Salesforce research?
+    answers:
+      - Thanks for your interest! Please see https://einstein.ai/career.
+    question_match_options:
+      - fuzzy_matching
+  compliment:
+    samples:
+      - You are amazing!
+    answers:
+      - Thanks! I'm flattered:)
+    question_match_options:
+      - fuzzy_matching

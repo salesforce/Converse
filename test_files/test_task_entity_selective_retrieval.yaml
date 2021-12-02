@@ -1,0 +1,167 @@
+Bot:
+  bot_name: the digital assistant for Northern Trail Information Center
+  text_bot: false
+Task:
+  positive:
+    description: polarity
+    samples:
+      - "Yes"
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - "yes please"
+
+  negative:
+    description: polarity
+    samples:
+      - "No"
+      - Sorry
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+
+  ## Verify ##
+  verify_user:
+    description: pull up your account
+    samples:
+    entities:
+      email_address:
+        function: http://localhost:8001/single_step_verify
+        confirm: yes
+        prompt:
+        response:
+        forget: no
+      zip_code:
+        function: http://localhost:8001/single_step_verify
+        confirm: no
+        prompt:
+        response:
+        forget: no
+        # retrieve is not set, i.e., it is by default true
+    entity_groups:
+      entity_group_1:
+        - zip_code
+      entity_group_2:
+        - email_address
+    success:
+      OR:
+        - VERIFY:
+            - entity_group_1
+        - VERIFY:
+            - entity_group_2
+    repeat: false
+    max_turns: 8
+
+  ## Check ##
+  check_order:
+    description: check your order status
+    samples:
+      - I have not received the ordered item yet
+      - The ordered item has not yet delivered
+      - is my ordered item on the way?
+      - i want to check order
+      - my order status
+      - check order status
+      - order status
+    entities:
+      order_status:
+        function: http://localhost:8001/get_order_status
+        confirm:
+        prompt:
+        response:
+          - One moment please. Your order status is <info>.
+      oid:
+        function: http://localhost:8001/query_order
+        confirm:
+        prompt:
+          - Please provide your order id for your order details.
+        response:
+          - "One moment please. Here are the details of your order: <info>."
+    entity_groups:
+      entity_group_1:
+        - order_status
+      entity_group_2:
+        - oid
+    success:
+      AND:
+        - TASK:
+            - verify_user
+        - INFORM:
+            - entity_group_1
+        - QUERY:
+            - entity_group_2
+    finish_response:
+      success:
+        - That is all the information that I have on your order status.
+      failure:
+        - Sorry, I can't help you check your order status.
+    repeat: true
+    repeat_response:
+      - Would you like to check the status of another order?
+    max_turns: 10
+
+  ## Update ##
+  update_order:
+    description: add more to your order
+    samples:
+      - Please add more items to my order
+      - Please add another item to my order
+      - Can you add more to my order
+    entities:
+      quantity:
+        function: http://localhost:8001/add_more_to_order
+        confirm: yes
+        prompt:
+          - How many do you want to add?
+        response:
+          - Got it. Now you have ordered <info> pieces.
+    entity_groups:
+      entity_group_1:
+        - quantity
+    success:
+      AND:
+        - TASK:
+            - verify_user
+        - UPDATE:
+            - entity_group_1
+    finish_response:
+      success:
+        - Your order has been updated.
+      failure:
+        - Sorry, I can't help you add more items to your order.
+    repeat: true
+    repeat_response:
+      - Would you like to add more items to your order?
+    max_turns: 10
+
+  ## Check Weather ##
+  check_weather:
+    description: check local weather
+    samples:
+      - I want to check the weather
+      - weather please
+      - query the weather
+      - query the climate
+      - what is the weather today
+      - is today sunny, cloudy or windy
+      - check the climate
+      - check the weather
+    entities:
+      zip_code:
+        confirm: no
+        prompt:
+        function: funcGetWeather
+        response:
+        retrieve: no # do not retrieve this entity from the history
+    entity_groups:
+      entity_group_1:
+        - zip_code
+    success:
+      AND:
+        - API:
+            - entity_group_1
+    repeat: false
+    max_turns: 2

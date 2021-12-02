@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pod-ner-both
+spec:
+  type: LoadBalancer
+  selector:
+    app: ner-both
+  loadBalancerIP: 34.122.137.192
+  loadBalancerSourceRanges:
+  - 204.14.232.0/21
+  - 202.95.77.64/27
+  - 13.110.54.0/26
+  - 34.68.151.180/32
+  - 10.8.0.0/14
+  - 10.136.0.0/14
+  ports:
+    - name: ner
+      port: 50051
+      targetPort: 50051
+

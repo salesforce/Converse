@@ -1,0 +1,26 @@
+Entity:
+  order_status:
+    methods:
+  oid:
+    type: STRING
+    methods:
+      regex: \d{3}-\d{3}-\d{3}
+  cancellation_reason:
+    type: PICKLIST
+    methods:
+      fuzzy_matching:
+        - 1
+        - 2
+        - 3
+        - one
+        - two
+        - three
+        - It took too long to deliver
+        - I no longer need this item
+        - Something else
+  refund_method:
+    type: PICKLIST
+    methods:
+      fuzzy_matching:
+        - in store credit
+        - credit card

@@ -1,0 +1,58 @@
+Bot:
+  bot_name: the digital assistant for Northern Trail Information Center
+  text_bot: false
+Task:
+  positive:
+    description: polarity
+    samples:
+      - 'Yes'
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - 'yes please'
+
+  negative:
+    description: polarity
+    samples:
+      - 'No'
+      - Sorry
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+      - I forgot my
+      - I forgot it
+      - I don't want to tell you
+
+  schedule_meeting:
+    description: schedule a meeting
+    samples:
+      - I want to set up a meeting
+      - I want to meet someone
+      - Can you help me set up a meeting
+      - schedule a meeting
+    entities:
+      meeting_time:
+        function:
+        confirm: no
+        prompt:
+          - When do you want to have the meeting?
+        response:
+          - Got it.
+    entity_groups:
+      entity_group_1:
+        - meeting_time
+    success:
+      AND:
+        - SIMPLE:
+            - entity_group_1
+    finish_response:
+      success:
+        - Your meeting is scheduled.
+      failure:
+        - Sorry, I can't help you set up your meeting.
+    repeat: false
+    repeat_response:
+    max_turns: 10

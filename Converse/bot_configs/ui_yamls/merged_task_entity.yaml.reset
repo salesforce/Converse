@@ -1,0 +1,30 @@
+Bot:
+  bot_name: ''
+  text_bot: true
+Task:
+  negative:
+    description: polarity
+    max_turns: 1
+    samples:
+      - "No"
+      - "Sorry"
+      - "No, I don't think so."
+      - "I dont know"
+      - "It's not right"
+      - "Not exactly"
+      - "Nothing to do"
+      - "I forgot my"
+      - "I forgot it"
+      - "I don't want to tell you"
+  positive:
+    description: polarity
+    max_turns: 1
+    samples:
+      - "Yes"
+      - "Sure"
+      - "correct"
+      - "No problem"
+      - "that's right"
+      - "yes please"
+      - "affirmative"
+      - "roger that"

@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+/*
+* Intent Predictor Service definition, accepts a model_id, document, classes with samples and returns class labels with
+* probabilities for each.
+*/
+
+service IntentDetectionService {
+    rpc IntentDetection(IntentDetectionRequest) returns (IntentDetectionResponse) {}
+}
+
+/*
+* Payload for querying the intent model
+*/
+
+message IntentDetectionRequest {
+  string document = 1; // input document
+  repeated IntentClass tasks = 2;
+}
+
+message IntentClass {
+  string label = 1;
+  repeated string samples = 2;
+}
+
+message IntentDetectionResponse {
+  IntentRes results = 1;
+}
+
+message IntentRes {
+  bool success = 1;
+  string label = 2;
+  float probability = 3;
+  string sent = 4;
+}

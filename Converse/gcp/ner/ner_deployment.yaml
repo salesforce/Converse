@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-ner-both
+  namespace: sfr-ns-x-yang
+spec:
+  selector:
+    matchLabels:
+      app: ner-both
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ner-both
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: sfr-home-pv-x-yang
+          persistentVolumeClaim:
+            claimName: sfr-home-pvc-x-yang
+      containers:
+      - name: xinyi-test
+        image: "gcr.io/salesforce-research-internal/txie-converse"
+        command: ["sleep","infinity"]
+        command: ["/bin/sh"]
+        args:
+          ["-c", "cd /export/home/models/ner_converse; python -u server.py >server_ner_addr.out & python -u aggr_server.py >grpc.out"]
+        ports:
+        - containerPort: 9001
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+            cpu: "7"
+            memory: "16Gi"
+        volumeMounts:
+          - name: sfr-home-pv-x-yang
+            mountPath: "/export/home"
+      tolerations:
+      - key: "gpu_num"
+        operator: "Equal"
+        value: "2"
+        effect: "NoSchedule"

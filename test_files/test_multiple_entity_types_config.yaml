@@ -1,0 +1,7 @@
+Entity:
+  location:
+    type:
+      - AP/LOCATION
+      - ZIPCODE
+    methods:
+      ner:

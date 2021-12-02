@@ -1,0 +1,34 @@
+Entity:
+  movie_name:
+    type: PICKLIST
+    methods:
+      fuzzy_matching:
+      - The Shawshank Redemption (1994)
+      - The Godfather (1972)
+      - 'The Godfather: Part II (1974)'
+      - The Dark Knight (2008)
+      - 12 Angry Men (1957)
+      - Schindler's List (1993)
+      - 'The Lord of the Rings: The Return of the King (2003)'
+      - Pulp Fiction (1994)
+      - The Good, the Bad and the Ugly (1966)
+      - 'The Lord of the Rings: The Fellowship of the Ring (2001)'
+    suggest_value: true
+  movie_date:
+    type: DATE
+  movie_time:
+    type:
+     - TIME
+     - PICKLIST
+    methods:
+      fuzzy_matching:
+        - '10:00 AM'
+        - '12:30 PM'
+        - '3:00 PM'
+        - '5:30 PM'
+        - '8:00 PM'
+    suggest_value: true
+  ticket_quantity:
+    type: CARDINAL
+  inform_movie_names:
+    methods:

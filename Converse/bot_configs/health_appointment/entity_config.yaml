@@ -1,0 +1,45 @@
+Entity:
+  ssn:
+    type: CARDINAL
+    methods:
+      ner:
+  birthday:
+    type: DATE
+    methods:
+      ner:
+  appt_date:
+    type: DATE
+    methods:
+      ner:
+  appt_time:
+    type: TIME
+    methods:
+      ner:
+  department:
+    type: PICKLIST
+    methods:
+      fuzzy_matching:
+        - ICU
+        - Elderly services
+        - Diagnostic Imaging
+        - General Surgery
+        - Neurology
+        - Microbiology
+        - Nutrition and Dietetics
+    suggest_value: yes
+  doctor_name:
+    type: PERSON
+    methods:
+      ner:
+      # spelling:
+  name:
+    type: PERSON
+    methods:
+      ner:
+      # spelling:
+  covid_protocol:
+    methods:
+  have_health_insurance:
+    type: USER_UTT
+    methods:
+      user_utterance:

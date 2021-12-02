@@ -1,0 +1,70 @@
+Bot:
+  text_bot: true
+  bot_name: the digital assistant for Northern Trail Information Center
+Task:
+  positive:
+    description: polarity
+    samples:
+      - 'Yes'
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - 'yes please'
+      - affirmative
+      - roger that
+
+  negative:
+    description: polarity
+    samples:
+      - 'No'
+      - Sorry
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+      - I forgot my
+      - I forgot it
+      - I don't want to tell you
+
+  check_and_update_order:
+    description: check your order status
+    samples:
+      - I have not received the ordered item yet
+      - The ordered item has not yet delivered
+      - is my ordered item on the way?
+      - i want to check order
+      - my order status
+      - check order status
+      - order status
+    entities:
+      oid:
+        function: http://localhost:8001/get_order_status
+        confirm:
+        prompt:
+          - Please provide your order id for your order status.
+        response:
+          - One moment please. Your order status is <info>.
+    entity_groups:
+      entity_group_1:
+        - oid
+      entity_group_2:
+        - oid
+    success:
+      AND:
+        - QUERY:
+            - entity_group_1
+        - QUERY:
+            - entity_group_1
+        - QUERY:
+            - entity_group_2
+    finish_response:
+      success:
+        - That is all the information that I have on your order status.
+      failure:
+        - Sorry, I can't help you check your order status.
+    repeat: true
+    repeat_response:
+      - Would you like to check the status of another order?
+    max_turns: 10

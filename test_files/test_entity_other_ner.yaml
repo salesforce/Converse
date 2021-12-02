@@ -1,0 +1,7 @@
+Entity:
+  meeting_time:
+    type:
+      - DATE
+      - STRING
+    methods:
+      ner:

@@ -1,0 +1,53 @@
+Bot:
+  bot_name: the digital assistant for Northern Trail Information Center
+  text_bot: false
+Task:
+  positive:
+    description: polarity
+    samples:
+      - "Yes"
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - "yes please"
+
+  negative:
+    description: polarity
+    samples:
+      - "No"
+      - Sorry
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+  ## Check Weather ##
+  check_weather:
+    description: check local weather
+    samples:
+      - I want to check the weather
+      - weather please
+      - query the weather
+      - query the climate
+      - what is the weather today
+      - is today sunny, cloudy or windy
+      - check the climate
+      - check the weather
+    entities:
+      location:
+        confirm: no
+        prompt:
+        function: funcGetWeather
+        response:
+    entity_groups:
+      entity_group_1:
+        - location
+    success:
+      AND:
+        - API:
+            - entity_group_1
+    repeat: True
+    repeat_response:
+      - Would you like to check the weather for another location?
+    max_turns: 2

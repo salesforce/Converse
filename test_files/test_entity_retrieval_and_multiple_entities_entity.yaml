@@ -1,0 +1,14 @@
+Entity:
+  order_status:
+    methods:
+  email_address:
+    type: EMAIL
+    methods:
+      ner:
+      spelling:
+  zip_code:
+    type: ZIPCODE
+    methods:
+      regex: \d{5}
+      ner:
+      spelling:

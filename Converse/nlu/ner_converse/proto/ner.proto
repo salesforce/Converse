@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+/*
+* Named Entity Recognition Predictor Service definition, accepts a model_id & document and returns labels with
+* probabilities for each.
+*/
+service NERPredictorService {
+  rpc predict(NERPredictionRequest) returns (NERPredictionResponse) {}
+}
+
+message NERPredictionRequest {
+  string model_id = 1; // id of the model
+  bytes document = 2; // document to recognize named entities from
+  bool normalizeToken = 3;
+  bool normalizeSentence = 4;
+  bool returnSpan = 5; // start and end position of the recognized text
+  string timeZone = 6;
+  string language = 7;
+}
+
+message NERPredictionResponse {
+  bool success = 1;
+  string error = 2;
+  repeated NERPredictions probabilities = 3;
+  string normalizedValue = 4; // sentence level normalized value
+}
+
+message NERPredictions {
+  string label = 1; // named entity label
+  float probability = 2; // probability score
+  string token = 3; // recognized token
+  string normalizedValue = 4; // token level normalized value, if any
+  NerSpan span = 5; // start and end position of the recognized text
+}
+
+message NerSpan {
+  int32 start = 1; // start index of the recognized token
+  int32 end = 2; // end index of the recognized token
+}

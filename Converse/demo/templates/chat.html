@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: white;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+        <!-- <h1>Salesforce Converse Bot</h1> -->
+        <div><p><label id="cid" style="display: none;">{{cid}}</label></p></div>
+        <!--
+            <div><p><a href="{{'/dialog_status/'+cid}}" target="_blank" rel="noopener noreferrer">status</a></p></div>
+        -->
+        <form>
+            <div class="row">
+                <div class="col-lg-12-">
+                    <div id="chatbox">
+                        <div class="">
+                            <p>
+                            <pre><span class="botText">BOT: {{greetings}}</span></pre>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12-">
+                    <div id="userInput" class="input-group">
+                        <input id="text" type="text" class="form-control" placeholder="Message">
+                        <span class="input-group-btn">
+                        <button id="send" class="btn btn-default" type="submit">Send</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("form").on("submit", function (event) {
+            var rawText = $("#text").val();
+            var cid = document.getElementById('cid').textContent;
+            console.log(cid);
+            var userHtml = '<p><pre><span class="userText">ME: ' + rawText + "</span></pre></p>";
+            $("#text").val("");
+            $("#chatbox").append(userHtml);
+            document.getElementById("userInput").scrollIntoView({
+                block: "start",
+                behavior: "smooth",
+            });
+            var dialog = {
+                text: rawText,
+                cid: cid,
+            };
+            $.ajax({
+                data: JSON.stringify(dialog),
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: "/process",
+            }).done(function (data) {
+                data = data.response;
+                var botHtml = "<p><pre><span class='botText'>BOT:  " + data + "</span></pre></p>";
+                $("#chatbox").append($.parseHTML(botHtml));
+                document.getElementById("userInput").scrollIntoView({
+                    block: "start",
+                    behavior: "smooth",
+                });
+
+                parent.window.change_iframe_src("{{cid}}");
+            });
+            event.preventDefault();
+            return false;
+        });
+        parent.window.change_iframe_src("{{cid}}");
+    });
+</script>
+</body>
+
+</html>

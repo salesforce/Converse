@@ -1,0 +1,127 @@
+Bot:
+  bot_name: the digital assistant for Northern Trail Information Center
+  text_bot: false
+Task:
+  ## Verify user ##
+  verify_user:
+    description: verify that you are in our database
+    entities:
+      email_address:
+        function: http://localhost:8001/single_step_verify
+        confirm: yes
+        prompt:
+        response:
+      zip_code:
+        function: http://localhost:8001/single_step_verify
+        confirm: no
+        prompt:
+        response:
+    entity_groups:
+      entity_group_1:
+        - email_address
+      entity_group_2:
+        - zip_code
+    success:
+      AND:
+        - VERIFY:
+            - entity_group_1
+        - VERIFY:
+            - entity_group_2
+    confirm:
+    max_turns: 5
+
+  ## Fake user ##
+  fake_user:
+    description: pull up your account
+    entities:
+      email_address:
+        function: http://localhost:8001/single_step_verify
+        confirm: yes
+        prompt:
+        response:
+      zip_code:
+        function: http://localhost:8001/single_step_verify
+        confirm: no
+        prompt:
+        response:
+    entity_groups:
+      entity_group_1:
+        - email_address
+      entity_group_2:
+        - zip_code
+    success:
+      AND:
+        - VERIFY:
+            - entity_group_1
+        - VERIFY:
+            - entity_group_2
+    finish_response:
+      success:
+        - fake_user succeeded
+    confirm:
+    max_turns: 5
+
+  ## Check ##
+  check_order:
+    description: check your order status
+    samples:
+      - I have not received the ordered item yet
+      - The ordered item has not yet delivered
+      - is my ordered item on the way?
+    entities:
+      order_status:
+        function: http://localhost:8001/get_order_status
+        confirm:
+        prompt:
+        response:
+          - One moment please. Your order status is <info>.
+    entity_groups:
+      entity_group_1:
+        - order_status
+    success:
+      AND:
+        - TASK:
+            - fake_user
+        - INFORM:
+             - entity_group_1
+    finish_response:
+      success:
+        - check_order succeeded. <info>
+      failure:
+        - check_order failed. <info>
+    confirm:
+    repeat: true
+    max_turns: 10
+
+  ## Update ##
+  update_order:
+    description: add more to your order
+    samples:
+      - Please add more items to my order
+      - Please add another item to my order
+      - Can you add more to my order
+    entities:
+      quantity:
+        function: http://localhost:8001/add_more_to_order
+        confirm: yes
+        prompt:
+          - How many do you want to add?
+        response:
+          - Got it. Now you have ordered <info> pieces.
+    entity_groups:
+      entity_group_1:
+        - quantity
+    success:
+      AND:
+        - TASK:
+            - fake_user
+        - UPDATE:
+            - entity_group_1
+    finish_response:
+      failure:
+        - update_order failed
+    confirm:
+    repeat: true
+    repeat_response:
+      - update_order repeat
+    max_turns: 10

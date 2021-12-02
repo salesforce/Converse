@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pod-intent-both
+spec:
+  type: LoadBalancer
+  selector:
+    app: intent-both
+  loadBalancerIP: 35.225.32.179
+  loadBalancerSourceRanges:
+  - 204.14.232.0/21
+  - 202.95.77.64/27
+  - 13.110.54.0/26
+  - 34.68.151.180/32
+  - 10.8.0.0/14
+  - 10.136.0.0/14
+  ports:
+    - name: intent
+      port: 9001
+      targetPort: 9001

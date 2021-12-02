@@ -1,0 +1,13 @@
+Entity:
+  department:
+    type: PICKLIST
+    methods:
+      fuzzy_matching:
+        - ICU
+        - Elderly services
+        - Diagnostic Imaging
+        - General Surgery
+        - Neurology
+        - Microbiology
+        - Nutrition and Dietetics
+    suggest_value: yes

@@ -1,0 +1,83 @@
+Bot:
+  text_bot: true
+  bot_name: demo bot
+Task:
+  positive:
+    description: polarity
+    samples:
+    - 'Yes'
+    - Sure
+    - correct
+    - No problem
+    - that's right
+    - yes please
+    - affirmative
+    - roger that
+  negative:
+    description: polarity
+    samples:
+    - 'No'
+    - Sorry
+    - No, I don't think so.
+    - I dont know
+    - It's not right
+    - Not exactly
+    - Nothing to do
+    - I forgot my
+    - I forgot it
+    - I don't want to tell you
+  inch_to_cm:
+    description: convert inches to centimeters
+    samples:
+    - I want to convert inches to centimeters
+    - can you help me convert inches to centimeters
+    - inches to centimeters
+    - convert inches
+    entities:
+      inch:
+        function: funcInch2Cm
+        confirm: false
+        prompt:
+        - How many inches do you want to convert?
+        response: []
+    entity_groups:
+      entity_group_1:
+      - inch
+    success:
+      AND:
+      - TASK:
+        - verify_user
+      - API:
+        - entity_group_1
+    finish_response:
+      success: []
+      failure: []
+    repeat: true
+    repeat_response:
+      - Do you want to convert inches to centimeters again?
+    task_finish_function: null
+    max_turns: 10
+  verify_user:
+    description: verify your identity
+    samples: []
+    entities:
+      name:
+        function: null
+        confirm: false
+        prompt: []
+        response: []
+    entity_groups:
+      entity_group_1:
+        - name
+    success:
+      AND:
+        - SIMPLE:
+            - entity_group_1
+    finish_response:
+      success:
+        - I have verified your identity.
+      failure: []
+    repeat: false
+    repeat_response: []
+    task_finish_function: null
+    max_turns: 10

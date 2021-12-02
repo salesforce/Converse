@@ -1,0 +1,144 @@
+Bot:
+  text_bot: true
+  bot_name: the digital assistant for Northern Trail Information Center
+Task:
+  positive:
+    description: polarity
+    samples:
+      - "Yes"
+      - Sure
+      - correct
+      - No problem
+      - that's right
+      - "yes please"
+      - affirmative
+      - roger that
+
+  negative:
+    description: polarity
+    samples:
+      - "No"
+      - Sorry
+      - No, I don't think so.
+      - I dont know
+      - It's not right
+      - Not exactly
+      - Nothing to do
+      - I forgot my
+      - I forgot it
+      - I don't want to tell you
+
+  ## Verify ##
+  verify_user:
+    description: pull up your account
+    samples:
+    entities:
+      email_address:
+        function: http://localhost:9002/entity_service/single_step_verify
+        confirm: yes
+        prompt:
+        response:
+      zip_code:
+        function: http://localhost:9002/entity_service/single_step_verify
+        confirm: no
+        prompt:
+        response:
+    entity_groups:
+      email_address_group:
+        - email_address
+      zip_code_group:
+        - zip_code
+    success:
+      OR:
+        - VERIFY:
+            - email_address_group
+        - VERIFY:
+            - zip_code_group
+    finish_response:
+      success:
+        - I have verified your identity.
+      failure:
+        - Sorry, I can't verify your identity.
+    repeat: false
+    max_turns: 8
+
+  ## Check ##
+  check_order:
+    description: check your order status
+    samples:
+      - I have not received the ordered item yet
+      - The ordered item has not yet delivered
+      - is my ordered item on the way?
+      - i want to check my order
+      - my order status
+      - check order status
+      - order status
+    entities:
+      oid:
+        function: http://localhost:9002/entity_service/get_order_status
+        confirm:
+        prompt:
+          - Please provide your order id for your order status.
+        response:
+          - One moment please. Your order status is <info>.
+    entity_groups:
+      order_id_group:
+        - oid
+    success:
+      AND:
+        - TASK:
+            - verify_user
+        - QUERY:
+            - order_id_group
+    finish_response:
+      success:
+        - That is all the information that I have on your order status.
+      failure:
+        - Sorry, I can't help you check your order status.
+    repeat: true
+    repeat_response:
+      - Would you like to check the status of another order?
+    max_turns: 10
+
+  ## Update ##
+  update_order:
+    description: add more to your order
+    samples:
+      - Please add more items to my order
+      - Please add another item to my order
+      - Can you add more to my order
+    entities:
+      oid:
+        function: collect_info
+        confirm: no
+        prompt:
+          - Could you please tell me the order id of the item that you want to order more of?
+        response:
+          - Sure.
+      quantity:
+        function: http://localhost:9002/entity_service/add_more_to_order
+        confirm: yes
+        prompt:
+          - How many do you want to add?
+        response:
+          - Got it. Now you have ordered <info> pieces.
+        retrieve: false
+    entity_groups:
+      order_quantity_group:
+        - oid
+        - quantity
+    success:
+      AND:
+        - TASK:
+            - verify_user
+        - UPDATE:
+            - order_quantity_group
+    finish_response:
+      success:
+        - Your order has been updated.
+      failure:
+        - Sorry, I can't help you add more items to your order.
+    repeat: true
+    repeat_response:
+      - Would you like to add more items to your order?
+    max_turns: 10

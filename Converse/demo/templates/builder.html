@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Converse Configuration Tool</title>
+    <!--
+        <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0">
+    -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" href="/static/favicon.ico"/>
+
+    <!-- Custom CSS -->
+    <link href="/apple-touch-icon.png" sizes="180x180" rel="apple-touch-icon">
+    <link href="static/css/simple-sidebar.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/jqtree.css">
+    <link rel="stylesheet" type="text/css" href="static/css/type.css?v={{ts}}">
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap-multiselect.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery/jquery.cookie.js"></script>
+    <script type="text/javascript" src="static/js/jquery/jquery.tmpl.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery.bootstrap-growl.js"></script>
+
+    <script type="text/javascript" src="static/js/tree.jquery.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap-multiselect.js"></script>
+    <script type="text/javascript" src="static/js/tooltips.js"></script>
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class='header' style='margin:10px; ' id="nav-header">
+        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">⧉</a>
+        <button type='button' class="btn btn-warning btn-sm" id='deletebtn' title="Delete"><span
+                class="glyphicon glyphicon-trash"></span></button>
+
+        <button type='submit' class="btn btn-primary btn-sm" id='savebtn' title="Save"><span
+                class="glyphicon glyphicon-floppy-disk"></span></button>
+
+        <button role="button" class="btn btn-success btn-sm" id='ulbtn' title="upload" data-target="_blank"><a href=""
+                                                                                                               target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-cloud-arrow-up-fill" viewBox="0 0 16 16">
+                <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2zm2.354 5.146a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2z"/>
+            </svg>
+        </a></button>
+        <button role="button" class="btn btn-success btn-sm" id='dlbtn' title="Download" data-target="_blank"><a href=""
+                                                                                                                 target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-cloud-arrow-down-fill" viewBox="0 0 16 16">
+                <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2zm2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708z"/>
+            </svg>
+        </a></button>
+        <button role="button" class="btn btn-success btn-sm" id='logoutbtn' title="Chat" data-target="_blank"
+                data-href='/client'><a href="/client" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-chat-text-fill" viewBox="0 0 16 16">
+                <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM4.5 5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zm0 2.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zm0 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4z"/>
+            </svg>
+        </a></button>
+        <div id='msg'></div>
+
+    </div>
+</div>
+
+
+<div id="wrapper">
+
+    <div id="sidebar-wrapper">
+        <ol id="tree" class="default vertical"></ol>
+        <ol style="display:none;" id="tmpltree" class="default vertical"></ol>
+    </div>
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <form id='typeform' role="form">
+                        <div class='content'>
+                            <div class="form-group" id="node_name">
+                                <label for="name"> <span>Name</span> </label>
+                                <button id="newinputbtn" style="float:right;margin-bottom:3px;" type="button"
+                                        class="btn  btn-xs" title="New Input"><span
+                                        class="glyphicon glyphicon-plus"></span></button>
+                                <input class="form-control" id="name" name="_name_" data-old="" value=""/>
+                                <input type="hidden" id="key" name="_key_" value=""/>
+                            </div>
+                            <div id="fieldset"></div>
+                        </div>
+                    </form>
+                    <div style="float:right;display:none;" id="logic">
+
+                        <div id="logic_input">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-xs" id="logic_input_text"
+                                       placeholder="node name">
+                                <span class="input-group-btn">
+						<button class="btn btn-default btn-xs" id="logic_input_add" type="button">Add</button>
+					      </span>
+                            </div>
+                        </div>
+
+                        <div class="btn-group" id="logic_select">
+                            <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                Add <span class="caret"></span>
+                            </button>
+                            <ul id="add_drop" class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                <li><a href="#" class="logic">AND</a></li>
+                                <li><a href="#" class="logic">OR</a></li>
+                                <li role="separator" class="divider logic"></li>
+                                <li><a href="#" class="action">TASK</a></li>
+                                <li><a href="#" class="action">INFORM</a></li>
+                                <li><a href="#" class="action">INSERT</a></li>
+                                <li><a href="#" class="action">SIMPLE</a></li>
+                                <li><a href="#" class="action">QUERY</a></li>
+                                <li><a href="#" class="action">UPDATE</a></li>
+                                <li><a href="#" class="action">VERIFY</a></li>
+                                <li><a href="#" class="action">API</a></li>
+                            </ul>
+                        </div>
+
+                        <button class="btn btn-default btn-xs" id="logic_rm">Delete</button>
+                    </div>
+
+                    <ol id="objecttree" class="default vertical"></ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+</div> <!-- /#wrapper -->
+
+
+<!-- Modal -->
+<div id="fieldModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <form action="" id="inputform">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Property edit</h4>
+                </div>
+                <div class="modal-body" id="inputmodal">
+                    <div class="form-group">
+                        <label for="inputname"> Property:</label>
+                        <input type="text" class="form-control" id="inputname" value="" data-old="" name="name">
+                        <select id="inputlist" class="form-control">
+                            <option value="ner">ner</option>
+                            <option value="regex">regex</option>
+                            <option value="spelling">spelling</option>
+                            <option value="user_utterance">user_utterance</option>
+                            <option value="fuzzy_matching">fuzzy_matching</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputselect"> Type:</label>
+                        <select class="form-control" id='inputselect' name="type" value='' data-old="">
+                            <option value="text">text</option>
+                            <option value="textarea">textarea for list</option>
+                            <option value="multiselect">multiselect</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default" id='inputsave'>Add</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div id="uploadModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <form action="/upload" id="uploadform" method="post" enctype="multipart/form-data" name="uploadform">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Upload <span id="filetype"></span> Template File</h4>
+                </div>
+                <div class="modal-body" id="inputmodal">
+                    <div class="form-group">
+                        <input type="file" class="form-control" id="uploadfile" name="file" required/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default" id='upload'>Upload</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<template id="rename_template">
+    <div class="input-group rename-control">
+        <input type="text" class="form-control input-xs" id="rename_input">
+        <span class="input-group-btn">
+		<button class="btn btn-default btn-xs" id="rename_btn" type="button">rename</button>
+	        <img src='static/delete.svg' class='delete'>
+	      </span>
+    </div>
+</template>
+
+
+<template id="info_template">
+    <div class="info">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle"
+             viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+        </svg>
+        <div class="tip"></div>
+    </div>
+</template>
+
+
+<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="footer">
+        <select id='file'>
+            <option>task</option>
+            <option>response</option>
+            <option>policy</option>
+        </select>
+        <select id='history'>
+            <option></option>
+        </select>
+        <button class="btn btn-primary " id="saveall">Save</button>
+        <button class="btn btn-primary " id="next">Next</button>
+        <button class="btn btn-primary " id="new">New</button>
+    </div>
+</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="static/js/app.js?v={{ts}}"></script>
+</html>

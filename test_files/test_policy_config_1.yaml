@@ -1,0 +1,40 @@
+Flag: # within one turn
+  - got_info
+  - polarity
+  - max_no_info_turn
+  - continuous_no_info_turn
+  - got_intent
+  - got_entity_info
+
+State: # between turns
+  - cur_task
+  - confirm_continue
+  - cur_entity_name
+
+Logic:
+  - "not got_info":
+      - "not cur_task":
+          - "confirm_continue":
+              - "polarity == 1":
+                  - greetings
+              - "polarity == -1":
+                  - goodbye
+          - "polarity == 0":
+              - "continuous_no_info_turn > max_no_info_turn":
+                  - goodbye
+              - greetings
+          - "polarity == 1":
+              - empty_response
+          - "polarity == -1":
+              - empty_response
+      - "cur_entity_name":
+          - "polarity == 1":
+              - empty_response
+          - fail_entity
+  - got_info:
+      - "got_intent and got_entity_info":
+          - new_task_with_info
+      - "got_intent":
+          - got_new_task
+      - "got_entity_info":
+          - entity_info_handler

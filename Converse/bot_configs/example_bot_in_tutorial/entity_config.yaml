@@ -1,0 +1,9 @@
+Entity:
+  inch:
+    type: STRING
+    methods:
+      regex: \d+\.?\d*
+  name:
+    type: PERSON
+    methods:
+      ner: null

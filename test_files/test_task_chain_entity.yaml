@@ -1,0 +1,22 @@
+Entity:
+  quantity:
+    type: CARDINAL
+    methods:
+      ner:
+  order_status:
+    methods:
+  oid:
+    type: CARDINAL
+    methods:
+      ner:
+  email_address:
+    type: EMAIL
+    methods:
+      ner:
+      spelling:
+  zip_code:
+    type: CARDINAL
+    methods:
+      regex: \d{5}
+      ner:
+      spelling:

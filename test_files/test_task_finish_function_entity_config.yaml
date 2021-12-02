@@ -1,0 +1,13 @@
+Entity:
+  appt_date:
+    type: DATE
+    methods:
+      ner:
+  appt_time:
+    type: TIME
+    methods:
+      ner:
+  doctor_name:
+    type: PERSON
+    methods:
+      ner:
