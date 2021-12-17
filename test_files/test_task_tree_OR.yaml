@@ -1,6 +1,6 @@
 Bot:
   bot_name: the digital assistant for Northern Trail Information Center
-  text_bot: false
+  text_bot: true
 Task:
   positive:
     description: polarity

@@ -1144,9 +1144,9 @@ class TestNamedEntityExtractor(unittest.TestCase):
         res = self.named_entity_extractor4.extract(utt)
         self.assertEqual(len(res), 2)
         self.assertTrue(isinstance(res[0], ZipCodeEntity))
-        self.assertTrue(isinstance(res[1], LocationEntity))
+        self.assertTrue(isinstance(res[1], ZipCodeEntity))
         self.assertEqual(res[0].value, "94301")
-        self.assertEqual(res[1].value, (("ZipCode", "94301"),))
+        self.assertEqual(res[1].value, "94301")
 
 
 class TestMultiMethods(unittest.TestCase):

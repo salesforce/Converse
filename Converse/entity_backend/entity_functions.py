@@ -118,7 +118,7 @@ def search_departuring_flight(entities, *argv, **kargs):
     )
     msg += "Oceanic 815, Depart at 4:16am, 800USD\n"
     msg += "Ajira 316, Depart at 15:42pm, 1500USD\n"
-    msg += "Qantas 442, Depart at 23:08pm, 2300USD"
+    msg += "Qantas 442, Depart at 23:08pm, 2300USD."
     return resp(
         True,
         msg=msg,
@@ -127,10 +127,10 @@ def search_departuring_flight(entities, *argv, **kargs):
 
 @timeout(0.2)
 def search_returning_flight(entities, *argv, **kargs):
-    msg = "And here are your returning flights:"
+    msg = "And here are your returning flights:\n"
     msg += "Oceanic 443, Depart at 4:16am, 800USD\n"
     msg += "Ajira 232, Depart at 15:42pm, 1500USD\n"
-    msg += "Qantas 424, Depart at 23:08pm, 2300USD"
+    msg += "Qantas 424, Depart at 23:08pm, 2300USD."
     return resp(
         True,
         msg=msg,
@@ -262,14 +262,14 @@ def movies_being_shown(entities, *argv, **kargs):
     message = """Here are the movies in theater now:
       - The Shawshank Redemption (1994)
       - The Godfather (1972)
-      - 'The Godfather: Part II (1974)'
+      - The Godfather: Part II (1974)
       - The Dark Knight (2008)
       - 12 Angry Men (1957)
       - Schindler's List (1993)
-      - 'The Lord of the Rings: The Return of the King (2003)'
+      - The Lord of the Rings: The Return of the King (2003)
       - Pulp Fiction (1994)
       - The Good, the Bad and the Ugly (1966)
-      - 'The Lord of the Rings: The Fellowship of the Ring (2001)'
+      - The Lord of the Rings: The Fellowship of the Ring (2001)
     """
     return resp(
         True,
@@ -309,7 +309,7 @@ def inform_the_credit_card_issue(entities, *argv, **kargs):
     return resp(
         True,
         msg="It seems that your credit card has been suspended"
-        " because you balance has not been paid for 3 months."
+        " because your balance has not been paid for 3 months."
         " We will re-activate your credit card as soon as we "
         "receive the payment in full.",
     )

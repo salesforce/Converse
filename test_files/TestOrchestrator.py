@@ -7108,9 +7108,7 @@ class TestOrchestrator(unittest.TestCase):
 
         # see test_multiple_entity_types1 for more details
         self.assertEqual(mocked_func.call_count, 1)
-        self.assertEqual(
-            mocked_func.call_args_list[0][0], ({"location": (("ZipCode", "94403"),)},)
-        )
+        self.assertEqual(mocked_func.call_args_list[0][0], ({"location": "94403"},))
 
     @patch("Converse.dialog_info_layer.dial_info.InfoManager.info_pipeline")
     def test_picklist_userutt(self, mocked_info):
@@ -7954,7 +7952,6 @@ class TestOrchestrator(unittest.TestCase):
         for user_input, entity_dict, target_response in zip(
             user_inputs, target_dicts, target_responses
         ):
-
             res = dm.process(user_input, user_input, ctx)
             dmgr.save(cid, ctx)
             self.assertDictEqual(ctx.collected_entities, entity_dict)
@@ -10755,6 +10752,183 @@ class TestOrchestrator(unittest.TestCase):
         self.assertEqual(ctx.entity_history_manager.history[2], set())  # appt date
         self.assertEqual(ctx.entity_history_manager.history[3], set())  # birthday
         self.assertEqual(ctx.entity_history_manager.history[6], set())  # new appt date
+
+    @patch("Converse.dialog_state_manager.dial_state_manager.entity_api_call")
+    @patch("Converse.dialog_info_layer.dial_info.InfoManager.info_pipeline")
+    def test_multiple_entity_confirm(self, mocked_info, mocked_func):
+        """
+        When agent ask user to confirm entity info, user says no and
+        provide new info. Then agent ask user to confirm again.
+        """
+        dm = Orchestrator(
+            response_path="./Converse/bot_configs/response_template.yaml",
+            policy_path="./Converse/bot_configs/policy_config.yaml",
+            task_path="./test_files/test_task_tree_OR.yaml",
+            entity_path="./test_files/test_entity_config_shopping.yaml",
+            info_path="./Converse/bot_configs/dial_info_config.yaml",
+        )
+        dmgr = DialogContextManager.new_instance("memory")
+        cid = str(uuid.uuid4())
+        ctx = dmgr.reset_ctx(
+            cid,
+            dm.policy_layer.state_manager.entity_manager.entity_config,
+            dm.policy_layer.state_manager.task_config,
+            dm.policy_layer.bot_config,
+        )
+
+        mocked_info.side_effect = [
+            {
+                "ner": {"success": True},
+                "intent": {
+                    "success": True,
+                    "intent": "check_order",
+                    "prob": 0.9285513162612915,
+                    "sent": "check order status",
+                },
+                "intent_seg": [
+                    {
+                        "success": True,
+                        "intent": "check_order",
+                        "prob": 0.9285513162612915,
+                        "sent": "check order status",
+                    }
+                ],
+                "negation": {
+                    "wordlist": ["check", "order", "status"],
+                    "triplets": [(-1, -1, -1)],
+                },
+                "final_intent": {
+                    "intent": "check_order",
+                    "prob": 0.9285513162612915,
+                    "uncertain": False,
+                },
+            },
+            {
+                "ner": {
+                    "success": True,
+                    "probabilities": [
+                        {
+                            "label": "DUCKLING/email",
+                            "token": "3@g.com",
+                            "normalizedValue": "3@g.com",
+                            "span": {"end": 7},
+                        },
+                        {
+                            "label": "DUCKLING/number",
+                            "token": "3",
+                            "normalizedValue": "3.0",
+                            "span": {"end": 1},
+                        },
+                        {
+                            "label": "PERSON",
+                            "probability": 0.6145448684692383,
+                            "token": "3@g.com",
+                            "span": {"end": 7},
+                        },
+                        {
+                            "label": "AP/LOCATION",
+                            "probability": 0.7832757830619812,
+                            "token": "3@g.com",
+                            "normalizedValue": "AddressNumber:3@g.com",
+                            "span": {"end": 7},
+                        },
+                    ],
+                },
+                "intent": {"success": False, "intent": "", "prob": 0.0, "sent": ""},
+                "intent_seg": [
+                    {"success": False, "intent": "", "prob": 0.0, "sent": ""}
+                ],
+                "negation": {
+                    "wordlist": ["3", "@", "g.com"],
+                    "triplets": [(-1, -1, -1)],
+                },
+                "final_intent": {"intent": "", "prob": 0.0, "uncertain": False},
+            },
+            {
+                "ner": {
+                    "success": True,
+                    "probabilities": [
+                        {
+                            "label": "DUCKLING/email",
+                            "token": "4@g.com",
+                            "normalizedValue": "4@g.com",
+                            "span": {"start": 9, "end": 16},
+                        },
+                        {
+                            "label": "DUCKLING/number",
+                            "token": "4",
+                            "normalizedValue": "4.0",
+                            "span": {"start": 9, "end": 10},
+                        },
+                    ],
+                },
+                "intent": {
+                    "success": True,
+                    "intent": "negative",
+                    "prob": 0.9033418893814087,
+                    "sent": "No",
+                },
+                "intent_seg": [
+                    {
+                        "success": True,
+                        "intent": "negative",
+                        "prob": 0.9781754016876221,
+                        "sent": "No",
+                    },
+                    {"success": False, "intent": "", "prob": 0.0, "sent": ""},
+                ],
+                "negation": {
+                    "wordlist": ["no", ".", "it", "'s", "4", "@", "g.com"],
+                    "triplets": [(0, 3, 4)],
+                },
+                "final_intent": {"intent": "", "prob": 0.0, "uncertain": False},
+            },
+            {
+                "ner": {"success": True},
+                "intent": {
+                    "success": True,
+                    "intent": "positive",
+                    "prob": 0.9752330780029297,
+                    "sent": "affirmative",
+                },
+                "intent_seg": [
+                    {
+                        "success": True,
+                        "intent": "positive",
+                        "prob": 0.9752330780029297,
+                        "sent": "affirmative",
+                    }
+                ],
+                "negation": {"wordlist": ["yes"], "triplets": [(-1, -1, -1)]},
+                "final_intent": {
+                    "intent": "positive",
+                    "prob": 0.9752330780029297,
+                    "uncertain": False,
+                },
+            },
+        ]
+        mocked_func.side_effect = [resp(False, "Verify failed")]
+
+        user_inputs = ["check order status", "3@g.com", "no. it's 4@g.com", "yes"]
+        target_responses = [
+            [
+                "Oh sure, I'd be happy to help you check your order status.",
+                "First, I need to pull up your account.",
+                "your email address?",
+            ],
+            ["3@g.com?"],
+            ["4@g.com?"],
+            [
+                "I am sorry, but I could not recognize your email_address. ",
+                "your zip code?",
+            ],
+        ]
+
+        for user_input, target in zip(user_inputs, target_responses):
+            res = dm.process(user_input, user_input, ctx)
+            dmgr.save(cid, ctx)
+            for tgt in target:
+                self.assertIn(tgt, res)
 
 
 if __name__ == "__main__":

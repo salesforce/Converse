@@ -310,8 +310,8 @@ def set_up_demo_bots(yaml_dir, template_bot_name):
         task_path = os.path.join(yaml_dir, "banking/tasks.yaml")
         entity_path = os.path.join(yaml_dir, "banking/entity_config.yaml")
     elif template_bot_name == "5":
-        task_path = os.path.join(yaml_dir, "manufactory/tasks.yaml")
-        entity_path = os.path.join(yaml_dir, "manufactory/entity_config.yaml")
+        task_path = os.path.join(yaml_dir, "manufacturing/tasks.yaml")
+        entity_path = os.path.join(yaml_dir, "manufacturing/entity_config.yaml")
     elif template_bot_name == "6":
         response_path = os.path.join(yaml_dir, "book_flights/response_template.yaml")
         task_path = os.path.join(yaml_dir, "book_flights/tasks.yaml")

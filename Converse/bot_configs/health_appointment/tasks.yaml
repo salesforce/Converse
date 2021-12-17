@@ -63,14 +63,14 @@ Task:
     max_turns: 10
 
   health_appointment:
-    description: make an appointment at Stanford Health Care
+    description: make an appointment at Nurse Nancy
     samples:
       - I want to see a doctor
       - I don't feel so good
       - I would like to make an appointment
       - I want to make an appointment
       - I got a fever
-      - make an appointment at Stanford Health Care
+      - make an appointment at Nurse Nancy
     entities:
       appt_date:
         function: collect_info
@@ -94,6 +94,7 @@ Task:
         function: collect_info
         confirm:
         prompt:
+          - May I have your preferred doctor name?
         response:
       covid_protocol:
         function: covid_protocol

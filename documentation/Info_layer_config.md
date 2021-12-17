@@ -1,4 +1,4 @@
-# ReadMe - Dialogue Info Layer Config
+# Dialogue Info Layer Configuration
 
 The Dialogue Info Layer handles NLU in Converse, and it is configurable through a yaml file. You can easily add new models or services and configure each model’s arguments for initialization and execution. The NLU models are served as gRPC services. You can also use their NLU models as REST APIs or Python function calls.
 The path to Dialogue Info Layer is:

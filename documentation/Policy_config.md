@@ -1,4 +1,4 @@
-# ReadMe - Dialogue Policy Configuration 
+# Dialogue Policy Configuration 
 
 The dialogue policy follows human-designed rules (which can be customized) to decide the next dialogue action and generate the next response based on information from the Dialogue Information Manager and Dialogue State Manager.
 

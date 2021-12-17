@@ -1165,7 +1165,7 @@ class TestTemplateBots(unittest.TestCase):
         ]
         target_responses = [
             [
-                "make an appointment at Stanford Health Care.",
+                "make an appointment at Nurse Nancy.",
                 "What date do you prefer for the appointment?",
             ],
             ["At what time?"],
@@ -1180,7 +1180,7 @@ class TestTemplateBots(unittest.TestCase):
                 "- Microbiology\n",
                 "- Nutrition and Dietetics",
             ],
-            ["your doctor name?"],
+            ["your preferred doctor name?"],
             ["Do you have health insurance?"],
             ["May I have the last four digits of your social security number?"],
             ["Your birthday is October 16, 2021.", "Is that correct?"],
@@ -2004,14 +2004,14 @@ class TestTemplateBots(unittest.TestCase):
                 "Here are the movies in theater now:\n",
                 "- The Shawshank Redemption (1994)\n",
                 "- The Godfather (1972)\n",
-                "- 'The Godfather: Part II (1974)'\n",
+                "- The Godfather: Part II (1974)\n",
                 "- The Dark Knight (2008)\n",
                 "- 12 Angry Men (1957)\n",
                 "- Schindler's List (1993)\n",
-                "- 'The Lord of the Rings: The Return of the King (2003)'\n",
+                "- The Lord of the Rings: The Return of the King (2003)\n",
                 "- Pulp Fiction (1994)\n",
                 "- The Good, the Bad and the Ugly (1966)\n",
-                "- 'The Lord of the Rings: The Fellowship of the Ring (2001)'\n",
+                "- The Lord of the Rings: The Fellowship of the Ring (2001)\n",
                 "Your request has been completed. Is there anything else I can help you with today?",
             ],
             [
@@ -2451,7 +2451,7 @@ class TestTemplateBots(unittest.TestCase):
             {
                 "success": True,
                 "msg": "It seems that your credit card has been suspended"
-                " because you balance has not been paid for 3 months."
+                " because your balance has not been paid for 3 months."
                 " We will re-activate your credit card as soon as we "
                 "receive the payment in full.",
             },
@@ -2477,7 +2477,7 @@ class TestTemplateBots(unittest.TestCase):
                 "Perfect. I pulled up your account.",
                 (
                     "It seems that your credit card has been suspended"
-                    " because you balance has not been paid for 3 months. "
+                    " because your balance has not been paid for 3 months. "
                 ),
                 (
                     "We will re-activate your credit card as "
@@ -2501,7 +2501,7 @@ class TestTemplateBots(unittest.TestCase):
     @patch("Converse.dialog_info_layer.dial_info.InfoManager.info_pipeline")
     def test_manufactory(self, mocked_info, mocked_func):
         """
-        Unit test for manufactory template bot
+        Unit test for manufacturing template bot
         :param mocked_info:
         :param mocked_func:
         :return:
@@ -2509,8 +2509,8 @@ class TestTemplateBots(unittest.TestCase):
         dm = Orchestrator(
             response_path="./Converse/bot_configs/response_template.yaml",
             policy_path="./Converse/bot_configs/policy_config.yaml",
-            task_path="./Converse/bot_configs/manufactory/tasks.yaml",
-            entity_path="./Converse/bot_configs/manufactory/entity_config.yaml",
+            task_path="./Converse/bot_configs/manufacturing/tasks.yaml",
+            entity_path="./Converse/bot_configs/manufacturing/entity_config.yaml",
             info_path="./Converse/bot_configs/dial_info_config.yaml",
         )
         dmgr = DialogContextManager.new_instance("memory")
@@ -3548,12 +3548,12 @@ class TestTemplateBots(unittest.TestCase):
             {"success": True, "msg": "Info collected: Economy"},
             {
                 "success": True,
-                "msg": "Let's start with your departing flight. Here are the cheapest flights departing from san francisco to los angeles on 2021-11-11:\nOceanic 815, Depart at 4:16am, 800USD\nAjira 316, Depart at 15:42pm, 1500USD\nQantas 442, Depart at 23:08pm, 2300USD",
+                "msg": "Let's start with your departing flight. Here are the cheapest flights departing from san francisco to los angeles on 2021-11-11:\nOceanic 815, Depart at 4:16am, 800USD\nAjira 316, Depart at 15:42pm, 1500USD\nQantas 442, Depart at 23:08pm, 2300USD.",
             },
             {"success": True, "msg": "Your departing flight is Oceanic 815. "},
             {
                 "success": True,
-                "msg": "And here are your returning flights:Oceanic 443, Depart at 4:16am, 800USD\nAjira 232, Depart at 15:42pm, 1500USD\nQantas 424, Depart at 23:08pm, 2300USD",
+                "msg": "And here are your returning flights:\nOceanic 443, Depart at 4:16am, 800USD\nAjira 232, Depart at 15:42pm, 1500USD\nQantas 424, Depart at 23:08pm, 2300USD.",
             },
             {"success": True, "msg": "Alright, your returning flight is Ajira 232. "},
         ]
@@ -3590,7 +3590,7 @@ class TestTemplateBots(unittest.TestCase):
                 "from san francisco to los angeles on 2021-11-11",
                 "Oceanic 815, Depart at 4:16am, 800USD",
                 "Ajira 316, Depart at 15:42pm, 1500USD",
-                "Qantas 442, Depart at 23:08pm, 2300USD",
+                "Qantas 442, Depart at 23:08pm, 2300USD.",
                 "Which one do you prefer?",
             ],
             [
@@ -3598,7 +3598,7 @@ class TestTemplateBots(unittest.TestCase):
                 "And here are your returning flights",
                 "Oceanic 443, Depart at 4:16am, 800USD",
                 "Ajira 232, Depart at 15:42pm, 1500USD",
-                "Qantas 424, Depart at 23:08pm, 2300USD",
+                "Qantas 424, Depart at 23:08pm, 2300USD.",
                 "Which one do you prefer?",
             ],
             [

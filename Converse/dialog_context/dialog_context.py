@@ -97,6 +97,7 @@ class DialogContext:
         self.do_pause = False
         self.finish_and_fail = False
         self.repeat = False
+        self.update_entity = dict()
         self.policy_map = dict()
         self.bot_config = bot_config
         # policy map stores string mapping from strings in config yaml
@@ -111,6 +112,7 @@ class DialogContext:
         self.entity_history_manager.reset()
         self.user_history = UserHistory()
         self.collected_entities = dict()
+        self.reset_update()
 
     def serialize(self) -> str:
         return jsonpickle.encode(self)
@@ -137,6 +139,19 @@ class DialogContext:
 
     def store_res(self, model_res):
         self.user_history.store_result(model_res)
+
+    def reset_update(self):
+        """
+        self.update_entity keeps track of the entity extracted from the entity
+        history or user utterance.
+        - self.update_entity["entity"] is the name of the entity, e.g. zip_code
+        - self.update_entity["value"] is the value of the entity, e.g. 94301
+        - self.update_entity["task"] is the name of the current task when the
+          entity was extracted, e.g. verify_user
+        """
+        self.update_entity["entity"] = None
+        self.update_entity["value"] = None
+        self.update_entity["task"] = None
 
 
 if __name__ == "__main__":

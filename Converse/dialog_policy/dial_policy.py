@@ -78,27 +78,8 @@ class DialoguePolicy:
             bot_config=self.bot_config,
             entity_manager=self.entity_manager,
         )
-        self.update_entity = dict()
 
-        self.reset_update()
         self.state_manager.reset()
-
-    def reset_update(self):
-        """self.update_entity keeps track of the entity extracted from the entity
-        history or user utterance.
-        - self.update_entity["entity"] is the name of the entity, e.g. zip_code
-        - self.update_entity["value"] is the value of the entity, e.g. 94301
-        - self.update_entity["task"] is the name of the current task when the entity
-          was extracted, e.g. verify_user
-        """
-        self.update_entity["entity"] = None
-        self.update_entity["value"] = None
-        self.update_entity["task"] = None
-
-    def send_to_state_manager(self, ctx: DialogContext):
-        res = dict()
-        res["update_info"] = self.update_entity
-        self.state_manager.receive_info_from_policy(res, ctx)
 
     def policy_tree(
         self,
@@ -203,7 +184,7 @@ class DialoguePolicy:
                     )
             else:  # inform
                 response_tmp = self._inform_user(ctx, cur_turn_states)
-                self.reset_update()
+                ctx.reset_update()
             return response_tmp
 
     def new_task_with_info(
@@ -265,13 +246,13 @@ class DialoguePolicy:
                     )
                 else:  # inform
                     response_tmp = self._inform_user(ctx, cur_turn_states)
-                    self.reset_update()
+                    ctx.reset_update()
             else:
                 ctx.cur_states.task_with_info = (
                     main_task,
                     len(ctx.user_history.user_utt_norm) - 1,
                 )
-                self.send_to_state_manager(ctx)
+                self.state_manager.receive_info_from_policy(ctx)
                 if ctx.cur_states.agent_action_type != "INFORM":
                     if not entity_candidates:
                         response_tmp += " " + self.response.ask_info(
@@ -284,14 +265,14 @@ class DialoguePolicy:
                         )
                 else:  # inform
                     response_tmp = self._inform_user(ctx, cur_turn_states)
-                    self.reset_update()
+                    ctx.reset_update()
             return response_tmp
 
     def _set_task(self, ctx: DialogContext) -> str:
         # send info to state manager
         ctx.cur_states.confirm_intent = False
         ctx.cur_states.unconfirmed_intent = []
-        self.send_to_state_manager(ctx)
+        self.state_manager.receive_info_from_policy(ctx)
         # generate response
         main_task = ctx.cur_states.new_task
         if not ctx.cur_states.cur_task:
@@ -360,7 +341,7 @@ class DialoguePolicy:
                             )
                         else:  # inform
                             response_tmp = self._inform_user(ctx, cur_turn_states)
-                        self.reset_update()
+                        ctx.reset_update()
                         return response_tmp
                     else:
                         ctx.cur_states.confirm_continue = True
@@ -411,9 +392,9 @@ class DialoguePolicy:
             ctx.cur_states.multiple_entities = False
             ctx.cur_states.multiple_entities_pool = []
             if got_entity:
-                self.update_entity["entity"] = ctx.cur_states.cur_entity_name
-                self.update_entity["value"] = entity
-                self.update_entity["task"] = ctx.cur_states.cur_task
+                ctx.update_entity["entity"] = ctx.cur_states.cur_entity_name
+                ctx.update_entity["value"] = entity
+                ctx.update_entity["task"] = ctx.cur_states.cur_task
                 response_tmp = self._check_info(ctx, cur_turn_states)
                 return response_tmp
             else:
@@ -459,32 +440,30 @@ class DialoguePolicy:
                         ctx,
                         retrieved=retrieved_entity,
                     )
-                    self.send_to_state_manager(ctx)
+                    self.state_manager.receive_info_from_policy(ctx)
                     log.info("confirm_entity = " f"{ctx.cur_states.confirm_entity}")
                     log.info("cur_entity_name = " f"{ctx.cur_states.cur_entity_name}")
                 else:
-                    self.update_entity["entity"] = ctx.cur_states.cur_entity_name
-                    self.update_entity["value"] = entity
-                    self.update_entity["task"] = ctx.cur_states.cur_task
+                    ctx.update_entity["entity"] = ctx.cur_states.cur_entity_name
+                    ctx.update_entity["value"] = entity
+                    ctx.update_entity["task"] = ctx.cur_states.cur_task
                     response_tmp = self._check_info(ctx, cur_turn_states)
 
             else:  # single non-spelling entity
                 if not need_confirm_entity:
-                    self.update_entity["entity"] = ctx.cur_states.cur_entity_name
-                    self.update_entity["value"] = entity
-                    self.update_entity["task"] = ctx.cur_states.cur_task
+                    ctx.update_entity["entity"] = ctx.cur_states.cur_entity_name
+                    ctx.update_entity["value"] = entity
+                    ctx.update_entity["task"] = ctx.cur_states.cur_task
                     response_tmp = self._check_info(ctx, cur_turn_states)
                 else:
-                    self.update_entity["entity"] = None
-                    self.update_entity["value"] = None
-                    self.update_entity["task"] = None
+                    ctx.reset_update()
                     response_tmp = self._ask_confirm(
                         ctx.cur_states.cur_entity_name,
                         entity,
                         ctx,
                         retrieved=retrieved_entity,
                     )
-                    self.send_to_state_manager(ctx)
+                    self.state_manager.receive_info_from_policy(ctx)
 
         else:  # multiple entity types
             ctx.cur_states.multiple_entities = True
@@ -605,21 +584,21 @@ class DialoguePolicy:
     def _inform_user(
         self, ctx: DialogContext, cur_turn_states: StatesWithinCurrentTurn
     ) -> str:
-        self.reset_update()
-        self.update_entity["entity"] = ctx.cur_states.cur_entity_name
-        self.update_entity["task"] = ctx.cur_states.cur_task
+        ctx.reset_update()
+        ctx.update_entity["entity"] = ctx.cur_states.cur_entity_name
+        ctx.update_entity["task"] = ctx.cur_states.cur_task
         cur_task = ctx.cur_states.cur_task
-        self.send_to_state_manager(ctx)
+        self.state_manager.receive_info_from_policy(ctx)
         self.state_manager.update_and_get_states(ctx)
         assert ctx.cur_states.inform_resp
         response_tmp = self.response.entity_response(
             task=cur_task,
-            entity=self.update_entity["entity"],
+            entity=ctx.update_entity["entity"],
             info=ctx.cur_states.inform_resp,
         )
         if not response_tmp:
             response_tmp = self.response.inform_user(
-                self.update_entity["entity"], ctx.cur_states.inform_resp
+                ctx.update_entity["entity"], ctx.cur_states.inform_resp
             )
         if ctx.cur_states.prev_task_finished:
             prev_task_finished_response = self.response.task_finish_response(
@@ -641,7 +620,7 @@ class DialoguePolicy:
                 ctx.cur_states.cur_task,
                 ctx.cur_states.cur_entity_name,
             )
-        self.reset_update()
+        ctx.reset_update()
         ctx.cur_states.inform_resp = None
         return response_tmp
 
@@ -677,7 +656,7 @@ class DialoguePolicy:
     ) -> str:
         cur_task = ctx.cur_states.cur_task
         log.info(f"cur_task = {cur_task}")
-        self.send_to_state_manager(ctx)
+        self.state_manager.receive_info_from_policy(ctx)
         self.state_manager.update_and_get_states(ctx)
         if ctx.cur_states.exceed_max_turn and not ctx.cur_states.cur_task:
             log.info("(exceed_max_turn and not cur_task) is True")
@@ -698,12 +677,12 @@ class DialoguePolicy:
             log.info("(task_with_info and task_with_info[0] == cur_task) is True")
             if ctx.cur_states.agent_action_type != "INFORM":
                 entity_type = ctx.cur_states.cur_entity_types[0]
-                self.reset_update()
+                ctx.reset_update()
                 candidates = []
                 if candidates:
                     return self.entity_info_handler(ctx, cur_turn_states, candidates)
             else:
-                self.reset_update()
+                ctx.reset_update()
                 return self._inform_user(ctx, cur_turn_states)
         if (
             ctx.cur_states.last_verified_entity and not ctx.cur_states.last_wrong_entity
@@ -719,7 +698,7 @@ class DialoguePolicy:
             response_tmp = ""
             if ctx.cur_states.verify_resp:
                 response_tmp = self.response.entity_response(
-                    task=self.update_entity["task"],
+                    task=ctx.update_entity["task"],
                     entity=ctx.cur_states.last_verified_entity,
                     info=ctx.cur_states.verify_resp,
                 )
@@ -735,8 +714,8 @@ class DialoguePolicy:
                 ctx.cur_states.prev_task_finish_func_response = ""
                 if prev_task_finished_response:
                     response_tmp += " " + prev_task_finished_response
-            if self.update_entity["entity"] != ctx.cur_states.cur_entity_name:
-                self.reset_update()
+            if ctx.update_entity["entity"] != ctx.cur_states.cur_entity_name:
+                ctx.reset_update()
                 if ctx.cur_states.agent_action_type != "INFORM":
                     candidates = self._get_entity_candidates_from_history(ctx)
                     log.info(f"candidates = {candidates}")
@@ -759,7 +738,7 @@ class DialoguePolicy:
             ctx.cur_states.last_wrong_entity = None
         elif (
             ctx.cur_states.last_wrong_entity
-            and ctx.cur_states.last_wrong_entity == self.update_entity["entity"]
+            and ctx.cur_states.last_wrong_entity == ctx.update_entity["entity"]
         ):  # verify failed
             log.info(
                 "(last_wrong_entity and last_wrong_entity == "
@@ -779,7 +758,7 @@ class DialoguePolicy:
                 response_tmp = ""
                 if ctx.cur_states.verify_resp:
                     response_tmp = self.response.entity_response(
-                        task=self.update_entity["task"],
+                        task=ctx.update_entity["task"],
                         entity=ctx.cur_states.last_verified_entity,
                         info=ctx.cur_states.verify_resp,
                     )
@@ -789,29 +768,29 @@ class DialoguePolicy:
         else:  # not verification
             log.info("executing _responses_not_verify_or_inform()")
             response_tmp = self._responses_not_verify_or_inform(
-                self.update_entity["task"], ctx, cur_turn_states
+                ctx.update_entity["task"], ctx, cur_turn_states
             )
-        self.reset_update()
+        ctx.reset_update()
         return response_tmp
 
     def fail_entity(
         self, ctx: DialogContext, cur_turn_states: StatesWithinCurrentTurn
     ) -> str:
-        self.update_entity["entity"] = ctx.cur_states.cur_entity_name
-        self.update_entity["value"] = "WRONG INFO!"
-        self.update_entity["task"] = ctx.cur_states.cur_task
-        self.send_to_state_manager(ctx)
+        ctx.update_entity["entity"] = ctx.cur_states.cur_entity_name
+        ctx.update_entity["value"] = "WRONG INFO!"
+        ctx.update_entity["task"] = ctx.cur_states.cur_task
+        self.state_manager.receive_info_from_policy(ctx)
 
         self.state_manager.update_and_get_states(ctx)
         if ctx.cur_states.last_wrong_entity and (
-            ctx.cur_states.last_wrong_entity == self.update_entity["entity"]
+            ctx.cur_states.last_wrong_entity == ctx.update_entity["entity"]
         ):  # verify failed
             response_tmp = self._cannot_recognize_entity(ctx, cur_turn_states)
         else:  # not verification
             response_tmp = self._responses_not_verify_or_inform(
-                self.update_entity["task"], ctx, cur_turn_states
+                ctx.update_entity["task"], ctx, cur_turn_states
             )
-        self.reset_update()
+        ctx.reset_update()
         return response_tmp
 
     def _cannot_recognize_entity(
@@ -855,14 +834,14 @@ class DialoguePolicy:
         if ctx.cur_states.simple_resp:
             response_tmp = self.response.entity_response(
                 task=task,
-                entity=self.update_entity["entity"],
+                entity=ctx.update_entity["entity"],
                 info=ctx.cur_states.simple_resp,
             )
             ctx.cur_states.simple_resp = None
         elif ctx.cur_states.update_resp:
             response_tmp = self.response.entity_response(
                 task=task,
-                entity=self.update_entity["entity"],
+                entity=ctx.update_entity["entity"],
                 info=ctx.cur_states.update_resp,
             )
             if not response_tmp:
@@ -871,7 +850,7 @@ class DialoguePolicy:
         elif ctx.cur_states.query_resp:
             response_tmp = self.response.entity_response(
                 task=task,
-                entity=self.update_entity["entity"],
+                entity=ctx.update_entity["entity"],
                 info=ctx.cur_states.query_resp,
             )
             if not response_tmp:
@@ -880,7 +859,7 @@ class DialoguePolicy:
         elif ctx.cur_states.api_resp:
             response_tmp = self.response.entity_response(
                 task=task,
-                entity=self.update_entity["entity"],
+                entity=ctx.update_entity["entity"],
                 info=ctx.cur_states.api_resp,
             )
             if not response_tmp:
@@ -889,7 +868,7 @@ class DialoguePolicy:
         elif ctx.cur_states.insert_resp:
             response_tmp = self.response.entity_response(
                 task=task,
-                entity=self.update_entity["entity"],
+                entity=ctx.update_entity["entity"],
                 info=ctx.cur_states.insert_resp,
             )
             if not response_tmp:
@@ -898,7 +877,7 @@ class DialoguePolicy:
         elif ctx.cur_states.delete_resp:
             response_tmp = self.response.entity_response(
                 task=task,
-                entity=self.update_entity["entity"],
+                entity=ctx.update_entity["entity"],
                 info=ctx.cur_states.delete_resp,
             )
             if not response_tmp:
@@ -977,15 +956,16 @@ class DialoguePolicy:
         log.info(f"cur_entity_name = {ctx.cur_states.cur_entity_name}")
         ctx.cur_states.confirm_entity = False
         if cur_turn_states.polarity == 1:
-            self.update_entity["entity"] = ctx.cur_states.cur_entity_name
-            self.update_entity["value"] = ctx.cur_states.unconfirmed_entity_value
+            ctx.update_entity["entity"] = ctx.cur_states.cur_entity_name
+            ctx.update_entity["value"] = ctx.cur_states.unconfirmed_entity_value
             ctx.entity_history_manager.insert_named_entity(
                 ctx.cur_states.cur_entity_name,
                 ctx.cur_states.unconfirmed_entity_value,
             )
-            self.update_entity["task"] = ctx.cur_states.cur_task
+            ctx.update_entity["task"] = ctx.cur_states.cur_task
             response_tmp = self._check_info(ctx, cur_turn_states)
-        else:  # confirm wrong, get more info
+            ctx.cur_states.unconfirmed_entity_value = None
+        else:  # confirm wrong/ no confirmation, get more info
             if not cur_turn_states.got_entity_info:
                 if ctx.cur_states.cur_entity_name:
                     if ctx.cur_states.agent_action_type != "INFORM":
@@ -995,7 +975,7 @@ class DialoguePolicy:
                         )
                     else:  # inform
                         response_tmp = self._inform_user(ctx, cur_turn_states)
-                        self.reset_update()
+                        ctx.reset_update()
                 elif not ctx.cur_states.cur_task:
                     response_tmp = " " + self.response.forward_to_human()
                     ctx.finish_and_fail = True
@@ -1003,9 +983,9 @@ class DialoguePolicy:
                     response_tmp = self.response.cannot_recognize_entity(
                         ctx.cur_states.last_wrong_entity
                     )
+                ctx.cur_states.unconfirmed_entity_value = None
             else:
                 response_tmp = self.entity_info_handler(ctx, cur_turn_states)
-        ctx.cur_states.unconfirmed_entity_value = None
         return response_tmp
 
     def _is_retrieved_entity(self, ctx: DialogContext, entity: Entity) -> bool:
@@ -1037,8 +1017,8 @@ class DialoguePolicy:
         """
         ctx.cur_states.confirm_continue = False
 
-        self.reset_update()
-        self.send_to_state_manager(ctx)
+        ctx.reset_update()
+        self.state_manager.receive_info_from_policy(ctx)
 
         if not model:
             if ctx.do_pause:
@@ -1116,7 +1096,7 @@ class DialoguePolicy:
         """
         ctx.cur_states.confirm_continue = False
 
-        self.send_to_state_manager(ctx)
+        self.state_manager.receive_info_from_policy(ctx)
 
         if not model:
             return self.response.goodbye()

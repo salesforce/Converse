@@ -1,3 +1,5 @@
+# Task Configuration
+
 There are three sections in the task configuration: bot configuration, task configuration, and FAQ/small-talk Configuration. **Bot configuration** contains the bot name and the bot type (text bot or voice bot). We define the tasks the bot supports under **task configuration**. A task usually requires multiple turns of dialogue. And we define the FAQ/small-talks under **FAQ/small-talk configuration**. FAQ/small-talk means a one-turn dialogue that can happen anywhere in a conversation in the Converse system.
 
 The documentation is in the following format:

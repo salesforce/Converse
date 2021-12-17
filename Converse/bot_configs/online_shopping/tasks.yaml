@@ -35,11 +35,13 @@ Task:
     entities:
       email_address:
         function: http://localhost:9002/entity_service/single_step_verify
+        # function: http://localhost:8001/single_step_verify
         confirm: yes
         prompt:
         response:
       zip_code:
         function: http://localhost:9002/entity_service/single_step_verify
+        # function: http://localhost:8001/single_step_verify
         confirm: no
         prompt:
         response:
@@ -76,6 +78,7 @@ Task:
     entities:
       oid:
         function: http://localhost:9002/entity_service/get_order_status
+        # function: http://localhost:8001/get_order_status
         confirm:
         prompt:
           - Please provide your order id for your order status.
@@ -117,6 +120,7 @@ Task:
           - Sure.
       quantity:
         function: http://localhost:9002/entity_service/add_more_to_order
+        # function: http://localhost:8001/add_more_to_order
         confirm: yes
         prompt:
           - How many do you want to add?

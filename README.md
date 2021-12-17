@@ -1,6 +1,12 @@
 # Converse
 
-Converse is a framework for designing task-oriented text and voice bots.
+Converse is a flexible framework for building and deploying task-oriented chatbots. 
+
+## Table of Contents
+1. [Getting Started](#getting-started)
+2. [Learn more about Converse](#learn-more-about-converse)
+3. [How to contribute](#how-to-contribute)
+4. [Citing Converse](#citing-converse)
 
 ## Getting Started
 
@@ -26,7 +32,7 @@ If you don't plan to edit the package code, we recommend using this method of ru
    brew install svn
    ```
 5. Run `converse-shell` to test if the package is successfully installed.
-If the command line output contains "Hello, Converse!", then you installed the package successfully.
+If the command line output contains `"Hello, Converse!"`, then you installed the package successfully.
 6. Run `converse-demo` to interact with pre-built example bots, and follow the instructions in your terminal.
 Note that first-time users can leave every required input empty to use the default value.
 Open the link provided by the script using your favorite browser, then you should see the demo page (pictured below).
@@ -87,80 +93,23 @@ To learn more about how to customize Converse for your use case, please refer to
 - [Response Configuration](./documentation/Response_Configuration.md)
 - [Policy Configuration](./documentation/Policy_config.md)
 - [Information Layer Configuration](./documentation/Info_layer_config.md)
+- [Template Bots](./documentation/Template_bots.md)
 
-TODO - add a link to the paper and technical report
+## How to contribute
+Welcome! We are so happy to see you willing to make your contributions to this repository!
 
-### More background information on dialogue management
+You can contribute via pull requests. Please follow these steps:
+1. Create an issue describing the feature you want to add or modify. A maintainer will review your issue.
+2. Discuss the issue with the maintainer in the issue you created. 
+3. Write your code, tests and documentation, and format them with `black`. We provide a `run_black.sh` script to help you format your code.
+4. Run `./run_unittest.sh`. Make sure that no error occurs in the tests.
+5. Create a pull request (PR) describing your changes. Note that your PR should be a reasonable length (<= 500 lines). 
 
-Survey papers:
+Your PR will be reviewed by a maintainer. When you get the approval from the maintainer, you can merge your code into the 
+main branch.
 
-- [A Survey on Dialogue Systems: Recent Advances and New Frontiers](https://arxiv.org/pdf/1711.01731.pdf) - A survey
-  paper on different components of dialogue systems and challenges of training and evaluating these systems.
-- [Neural Approaches to Conversational AI (Chapter 4: Task-oriented Dialogue Systems)](https://arxiv.org/pdf/1809.08267.pdf)
-  - A survey paper on different models in task-oriented dialogue systems.
 
-## Terminology List
 
-### Task Tree
 
-An [And-Or Tree data structure](https://en.wikipedia.org/wiki/And%E2%80%93or_tree) that maintains structures and dependencies of the tasks that agent is currently
-working on. \
-See `dial_tree.py`.
-
-### And Node
-
-A task node or an **And** relation node in the Task Tree, corresponding to `AND` in `tasks.yaml`.
-
-### Or Node
-
-A task node or an **Or** relation node in the Task Tree, corresponding to `OR` in `tasks.yaml`.
-
-### Leaf Node/ Entity Node
-
-A node that maintains the information of an **entity group**, corresponding to groups like `entity_group_1` and `entity_group_2` in `tasks.yaml`.
-
-### Leaf Node type
-
-`INFO`, `VERIFY`, `UPDATE`, `DELETE`, `INSERT`, `QUERY`
-
-### Entity
-
-An entity, like `email_address`, `name`, etc.
-
-### Entity configuration
-
-`entity_config.yaml`, you can config entities in this file.
-
-### Entity Type
-
-For `NER` model and `spelling`, like `PERSON`, `CARDINAL`, `EMAIL`.
-
-### Entity Method
-
-The ways how we can extract entity information when `NER` doesn't work, like `SPELLING`, `GMAP`.
-
-### Dialogue Tree Visualization
-
-See `tree.html`, which loads `treeData.json` and shows a tree graph in browser.
-
-### Dialogue Info Layer
-
-Dialogue Info Layer makes API calls to NLU model services and collect model results. \
-See `info_layer.py` and `info_logic.py` (old), which uses `info_layer.yaml` and `info_logic.yaml` (old) to config.
-
-### Dialogue Policy Engine
-
-Dialogue Policy Engine follows human-designed rules (which can be customized) to decide next Dialogue Action and
-generate next Response based on information from Info Layer and Dialogue State Manager. \
-The Dialogue Policy Engine is implemented in `dial_policy.py`, this is also the main script of the whole system. Config
-file is `policy_config.yaml`. Responses are generated using functions in `response.py`. The text for the responses are
-configured in `response_template.yaml`.
-
-### Dialogue State Manager
-
-Dialogue State Manager maintains all dialogue states. Dialogue states are all the information that the Dialogue Policy
-Engine needs to generate the next response. It acts as a bridge between the Dialogue Policy Engine and the Dialogue Tree
-Manager. The Dialogue Tree Manager decides the next node and next entity in dialogue tree for the current conversation
-turn based on the task tree (configured in `tasks_yaml/tasks.yaml`) and information provided by the user in the last
-turn. It interacts with `tree_manager.py` and `SimpleDB.py`. \
-The Dialogue State Manager is implemented in `dial_state_manager.py`.
+### Citing Converse
+`#TODO - add a link to the paper and technical report`

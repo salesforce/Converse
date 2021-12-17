@@ -271,9 +271,10 @@ class StateManager:
                 else:
                     ctx.cur_states.prev_task_finish_func_response = res["msg"]
 
-    def receive_info_from_policy(self, info, ctx):
+    def receive_info_from_policy(self, ctx):
         """
-        receive states from the policy, update and traverse the task tree.
+        receive task and entity information from the policy,
+        then update and traverse the task tree.
         """
         # Reset the task turn count after tasks are finished
         states = ctx.cur_states
@@ -286,8 +287,8 @@ class StateManager:
             self.task_turns[states.cur_task] += 1
         if states.new_task:
             self.new_task(states.new_task, tree_manager)
-        elif info["update_info"]["entity"]:
-            self.leaf_node_handler(info, ctx)
+        elif ctx.update_entity["entity"]:
+            self.leaf_node_handler(ctx)
         if (
             states.cur_task
             and self.task_turns[states.cur_task]
@@ -300,37 +301,37 @@ class StateManager:
         tree_manager.set_task(task_name)
         tree_manager.traverse()
 
-    def leaf_node_handler(self, info, ctx):
+    def leaf_node_handler(self, ctx):
         states = ctx.cur_states
         tree_manager = ctx.tree_manager
         assert tree_manager.cur_task
         assert tree_manager.cur_node
         assert tree_manager.cur_entity
         assert states.agent_action_type
-        assert tree_manager.cur_entity == info["update_info"]["entity"]
+        assert tree_manager.cur_entity == ctx.update_entity["entity"]
         func_name = self.task_config[states.cur_task].entities[states.cur_entity_name][
             "function"
         ]
         func, url = self._get_entity_or_task_function(func_name)
-        new_entity_name = info["update_info"]["entity"]
-        new_entity_value = extract_value_from_entity(info["update_info"]["value"])
+        new_entity_name = ctx.update_entity["entity"]
+        new_entity_value = extract_value_from_entity(ctx.update_entity["value"])
         ctx.collected_entities[new_entity_name] = new_entity_value
 
         log.info(f"collected_entities = {ctx.collected_entities}")
         log.info(f"func_name = {func_name}")
-        log.info(f"leaf_node_handler() = {info['update_info']}")
-        if info["update_info"]["value"] == "WRONG INFO!":
+        log.info(f"leaf_node_handler() = {ctx.update_entity}")
+        if ctx.update_entity["value"] == "WRONG INFO!":
             states.last_wrong_entity = tree_manager.cur_entity
             states.last_verified_entity = None
             states.last_verified_task = None
             tree_manager.update_entity(
-                info["update_info"]["value"],
+                ctx.update_entity["value"],
                 status=False,
             )
             tree_manager.traverse()
         elif states.agent_action_type == tree_manager.task_tree.simple:
             states.simple_resp = extract_display_value_from_entity(
-                info["update_info"]["value"]
+                ctx.update_entity["value"]
             )
             tree_manager.update_entity(
                 states.simple_resp,
@@ -345,7 +346,7 @@ class StateManager:
                 states.verify_resp = res["msg"]
                 if verify_status:  # verified
                     tree_manager.update_entity(
-                        info["update_info"]["value"],
+                        ctx.update_entity["value"],
                         status=True,
                     )
                     states.last_verified_entity = tree_manager.cur_entity
@@ -364,7 +365,7 @@ class StateManager:
                         states.spell_entity = states.cur_entity_name
                     else:
                         tree_manager.update_entity(
-                            info["update_info"]["value"],
+                            ctx.update_entity["value"],
                             status=False,
                         )
                         tree_manager.traverse()
