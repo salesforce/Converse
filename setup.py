@@ -25,7 +25,7 @@ setuptools.setup(
         "grpcio==1.27.2",
         "flake8==3.8.4",
         "flask==1.1.1",
-        "Flask-Cors==3.0.8",
+        "Flask-Cors==3.0.9",
         "fuzzysearch==0.7.0",
         "fuzzywuzzy==0.18.0",
         "jsonpickle==1.4.2",
