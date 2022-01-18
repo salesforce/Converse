@@ -34,7 +34,7 @@ setuptools.setup(
         "pony==0.7.14",
         "protobuf==3.11.3",
         "python-Levenshtein==0.12.0",
-        "pyyaml==5.3.1",
+        "pyyaml==5.4",
         "redis==3.5.3",
         "requests==2.23.0",
         "scikit-learn==0.22.2.post1",
