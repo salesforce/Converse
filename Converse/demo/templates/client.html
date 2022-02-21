@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="static/js/jquery/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
     <style>
         .row {
             margin:0px;
@@ -28,10 +28,10 @@
 
 <div class="row">
     <div class="tree col col-7 ">
-        <iframe name="tree" id="tree" src="" frameborder="0" scrolling="yes" align="left"></iframe>
+        <iframe name="tree" id="tree" src="" frameborder="0" scrolling="yes" align="left" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
     </div>
     <div class="chat col col-3 ">
-        <iframe id="chat" src="/chat" frameborder="0" scrolling="yes" align="right"></iframe>
+        <iframe id="chat" src="/chat" frameborder="0" scrolling="yes" align="right" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
     </div>
 
 </div>

@@ -25,7 +25,10 @@ chat_window = Blueprint(
 def printException():
     msg = traceback.format_exc()
     app.logger.info(msg)
-    print(msg)
+    print(
+        "Unfortunately, an error has occurred during the process. "
+        "Please refer to the log."
+    )
     return traceback.format_exc(limit=1)
 
 
