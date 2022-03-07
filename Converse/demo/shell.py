@@ -32,7 +32,7 @@ def download_files(yaml_dir="./Converse/bot_configs"):
         [
             "svn",
             "checkout",
-            "https://github.com/MetaMind/eloq_dial/trunk/Converse/bot_configs",
+            "https://github.com/salesforce/Converse/trunk/Converse/bot_configs",
             yaml_dir,
         ]
     )
@@ -40,7 +40,7 @@ def download_files(yaml_dir="./Converse/bot_configs"):
         [
             "svn",
             "checkout",
-            "https://github.com/MetaMind/eloq_dial/trunk/Converse/demo/templates",
+            "https://github.com/salesforce/Converse/trunk/Converse/demo/templates",
             os.path.join(UI_FOLDER, "templates"),
         ]
     )
@@ -48,7 +48,7 @@ def download_files(yaml_dir="./Converse/bot_configs"):
         [
             "svn",
             "checkout",
-            "https://github.com/MetaMind/eloq_dial/trunk/Converse/demo/static",
+            "https://github.com/salesforce/Converse/trunk/Converse/demo/static",
             os.path.join(UI_FOLDER, "static"),
         ]
     )
