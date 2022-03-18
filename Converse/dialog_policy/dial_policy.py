@@ -7,7 +7,7 @@
 import logging
 from typing import List
 
-from fuzzywuzzy import process
+from thefuzz import process
 
 from Converse.dialog_state_manager.dial_state_manager import (
     StateManager,

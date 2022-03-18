@@ -10,7 +10,7 @@ import sys
 import re
 from typing import Any, List, Tuple, Iterable
 
-from fuzzywuzzy import process, fuzz
+from thefuzz import process, fuzz
 from Converse.nlu.ner_converse.client import NER
 from num2words import num2words
 

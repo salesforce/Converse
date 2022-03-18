@@ -7,7 +7,7 @@
 import logging
 
 from fuzzysearch import find_near_matches
-from fuzzywuzzy import fuzz, process
+from thefuzz import fuzz, process
 from random import choice
 
 from Converse.dialog_info_layer.dial_info import InfoManager

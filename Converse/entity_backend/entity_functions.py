@@ -6,7 +6,7 @@
 
 
 import requests
-from fuzzywuzzy import process, fuzz
+from thefuzz import process, fuzz
 from wrapt_timeout_decorator import timeout
 from Converse.utils.utils import resp
 
