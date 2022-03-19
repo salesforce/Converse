@@ -303,5 +303,4 @@ if __name__ == "__main__":
     # CORS(app)
     app.logger.info("Initializing Dial ...")
     app.logger.info("done!")
-    print("!?!")
     app.run("0.0.0.0", port=9002, debug=True)

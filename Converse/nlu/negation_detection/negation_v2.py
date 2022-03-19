@@ -16,8 +16,8 @@ import codecs
 import argparse
 import string
 
-nltk.download("punkt")
-nltk.download("averaged_perceptron_tagger")
+nltk.download("punkt", quiet=True)
+nltk.download("averaged_perceptron_tagger", quiet=True)
 
 # Currently hard-coded dictionaries, need to consult with Wenpeng on these
 NEGATION_ADVERBS = {

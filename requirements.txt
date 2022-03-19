@@ -4,6 +4,7 @@ flake8==3.8.4
 flask==1.1.1
 Flask-Cors==3.0.9
 fuzzysearch==0.7.0
+itsdangerous==2.0.1
 jsonpickle==1.4.2
 nltk==3.6.6
 num2words==0.5.10

@@ -13,6 +13,7 @@ from proto import ner_pb2
 import logging
 
 logger = logging.getLogger(__name__)
+logging.disable(logging.INFO)
 
 
 class NerAddrParser(transformers.BertPreTrainedModel):

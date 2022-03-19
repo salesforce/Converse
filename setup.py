@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="converse-test-command",
-    version="0.2.9",
+    version="0.2.12",
     author="Salesforce Research",
     author_email="converse.ai@salesforce.com",
     description="A framework that facilitates creating task-oriented chatbot",
@@ -27,6 +27,7 @@ setuptools.setup(
         "flask==1.1.1",
         "Flask-Cors==3.0.9",
         "fuzzysearch==0.7.0",
+        "itsdangerous==2.0.1",
         "jsonpickle==1.4.2",
         "nltk==3.6.6",
         "num2words==0.5.10",
