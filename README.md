@@ -37,7 +37,8 @@ If the command line output contains `"Hello, Converse!"`, then you installed the
 Note that first-time users can leave every required input empty to use the default value.
 Open the link provided by the script using your favorite browser, then you should see the demo page (pictured below).
 You can interact with the bot by typing in the chat box on the right and the tree visualization will change based on
-your task progress.
+your task progress. Remember that the example bots are not open-domain chatbots. Please check
+[Template Bots](./documentation/Template_bots.md) for the details of the template bots before you run the demo.
 ![Picture of the demo in the browser](./pictures/demo_start.png)
 ![Picture of the demo in the browser after chatting with the bot](./pictures/demo.png)
 7. Run `converse-build` to configure your own bot. Follow the instructions in the terminal to set up the bot.
@@ -49,10 +50,10 @@ Open the link provided by the script using your favorite browser, then you shoul
 
 ### Running the Demo After Modifying Files in Converse
 
-1. Clone this repo and `cd` into the `eloq_dial` directory
+1. Clone this repo and `cd` into the `Converse` directory
     ```
-    git clone git@github.com:MetaMind/eloq_dial.git
-    cd eloq_dial
+    git clone git@github.com:salesforce/Converse.git
+    cd Converse
     ```
 2. Create a Python 3.7 virtual environment using [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html).
 3. Install dependencies. All the necessary packages are listed in `requirements.txt`. You can install all the
@@ -60,9 +61,9 @@ Open the link provided by the script using your favorite browser, then you shoul
     ```
     pip install -r requirements.txt
     ```
-4. Add the `eloq_dial` folder to your `PYTHONPATH`.
+4. Add the `Converse` folder to your `PYTHONPATH`.
    ```
-   export PYTHONPATH=$PYTHONPATH:/your_directory/eloq_dial
+   export PYTHONPATH=$PYTHONPATH:/your_directory/Converse
    ```
 5. In one terminal window, run the backend and check the log file converse.log:
     ```
