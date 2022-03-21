@@ -37,7 +37,8 @@ If the command line output contains `"Hello, Converse!"`, then you installed the
 Note that first-time users can leave every required input empty to use the default value.
 Open the link provided by the script using your favorite browser, then you should see the demo page (pictured below).
 You can interact with the bot by typing in the chat box on the right and the tree visualization will change based on 
-your task progress.
+your task progress. Remember that the example bots are not open-domain chatbots. Please check
+[Template Bots](./documentation/Template_bots.md) for the details of the template bots before you run the demo.
 ![Picture of the demo in the browser](./pictures/demo_start.png)
 ![Picture of the demo in the browser after chatting with the bot](./pictures/demo.png)
 7. Run `converse-build` to configure your own bot. Follow the instructions in the terminal to set up the bot.
