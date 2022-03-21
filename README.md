@@ -51,8 +51,8 @@ Open the link provided by the script using your favorite browser, then you shoul
 
 1. Clone this repo and `cd` into the `eloq_dial` directory
     ```
-    git clone git@github.com:MetaMind/eloq_dial.git
-    cd eloq_dial
+    git clone git@github.com:salesforce/Converse.git
+    cd Converse
     ```
 2. Create a Python 3.7 virtual environment using [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html).
 3. Install dependencies. All the necessary packages are listed in `requirements.txt`. You can install all the
