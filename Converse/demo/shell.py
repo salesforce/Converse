@@ -52,12 +52,10 @@ def download_files(yaml_dir="./Converse/bot_configs"):
             os.path.join(UI_FOLDER, "static"),
         ]
     )
-    # todo: download this single file directly from public folder
     subprocess.run(
         [
-            "mv",
-            os.path.join(UI_FOLDER, "templates/chat_window_app.py"),
-            os.path.join(os.getcwd(), "chat_window_app.py"),
+            "wget",
+            "https://raw.githubusercontent.com/salesforce/Converse/main/Converse/demo/chat_window_app.py"
         ]
     )
 
@@ -92,6 +90,8 @@ def set_up_ner_and_intent_model():
             "50051:50051",
             "converseallresearch/ner:0.1",
         ],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.STDOUT
     )
     # set up intent service
     intent_process = subprocess.Popen(
@@ -104,6 +104,8 @@ def set_up_ner_and_intent_model():
             "9001:9001",
             "converseallresearch/intent:0.1",
         ],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.STDOUT
     )
 
 
@@ -173,26 +175,7 @@ def build():
         "\ninput 2 if you would like to directly modify the yaml files, "
         "\n(default is 1):"
     )
-    if not building_method:
-        building_method = "1"
-    if building_method == "1":
-        # step 5-1: set up config UI
-        print("- Please open your browser and go to http://localhost:8088")
-        set_up_config_ui(
-            config_dir=yaml_dir,
-            response_path=os.path.join(yaml_dir, "ui_yamls/response_template.yaml"),
-            policy_path=os.path.join(yaml_dir, "ui_yamls/policy_config.yaml"),
-            task_path=os.path.join(yaml_dir, "ui_yamls/merged_task_entity.yaml"),
-            entity_path=os.path.join(yaml_dir, "ui_yamls/merged_task_entity.yaml"),
-            entity_extraction_path=os.path.join(
-                yaml_dir, "entity_extraction_config.yaml"
-            ),
-            info_path=os.path.join(yaml_dir, "dial_info_config.yaml"),
-            entity_function_path=os.path.join(yaml_dir, "entity_function.py"),
-            template_folder=os.path.join(UI_FOLDER, "templates"),
-            static_folder=os.path.join(UI_FOLDER, "static"),
-        )
-    elif building_method == "2":
+    if building_method == "2":
         # step 5-2: generate template configuration files
         config_generator = YamlGenerator(yaml_dir)
         receive_user_input(config_generator)
@@ -215,6 +198,24 @@ def build():
                 "--entity_function_path="
                 + os.path.join(yaml_dir, "entity_function.py"),
             ]
+        )
+    else:
+        building_method = "1"
+        # step 5-1: set up config UI
+        print("- Please open your browser and go to http://localhost:8088")
+        set_up_config_ui(
+            config_dir=yaml_dir,
+            response_path=os.path.join(yaml_dir, "ui_yamls/response_template.yaml"),
+            policy_path=os.path.join(yaml_dir, "ui_yamls/policy_config.yaml"),
+            task_path=os.path.join(yaml_dir, "ui_yamls/merged_task_entity.yaml"),
+            entity_path=os.path.join(yaml_dir, "ui_yamls/merged_task_entity.yaml"),
+            entity_extraction_path=os.path.join(
+                yaml_dir, "entity_extraction_config.yaml"
+            ),
+            info_path=os.path.join(yaml_dir, "dial_info_config.yaml"),
+            entity_function_path=os.path.join(yaml_dir, "entity_function.py"),
+            template_folder=os.path.join(UI_FOLDER, "templates"),
+            static_folder=os.path.join(UI_FOLDER, "static"),
         )
 
 
@@ -275,8 +276,6 @@ def demo():
         "\nplease input the number of the bot you're interested in:"
         "\n(default is 1):"
     )
-    if not template_bot_name:
-        template_bot_name = "1"
     print("- Please open your browser and go to http://localhost:9002/client")
     set_up_demo_bots(yaml_dir, template_bot_name)
 
@@ -297,10 +296,7 @@ def set_up_demo_bots(yaml_dir, template_bot_name):
     static_folder = os.path.join(UI_FOLDER, "static")
 
     # change the necessary variables
-    if template_bot_name == "1":
-        task_path = os.path.join(yaml_dir, "online_shopping/tasks.yaml")
-        entity_path = os.path.join(yaml_dir, "online_shopping/entity_config.yaml")
-    elif template_bot_name == "2":
+    if template_bot_name == "2":
         task_path = os.path.join(yaml_dir, "health_appointment/tasks.yaml")
         entity_path = os.path.join(yaml_dir, "health_appointment/entity_config.yaml")
     elif template_bot_name == "3":
@@ -316,6 +312,10 @@ def set_up_demo_bots(yaml_dir, template_bot_name):
         response_path = os.path.join(yaml_dir, "book_flights/response_template.yaml")
         task_path = os.path.join(yaml_dir, "book_flights/tasks.yaml")
         entity_path = os.path.join(yaml_dir, "book_flights/entity_config.yaml")
+    else:
+        template_bot_name = "1"
+        task_path = os.path.join(yaml_dir, "online_shopping/tasks.yaml")
+        entity_path = os.path.join(yaml_dir, "online_shopping/entity_config.yaml")
     subprocess.run(
         [
             "python",

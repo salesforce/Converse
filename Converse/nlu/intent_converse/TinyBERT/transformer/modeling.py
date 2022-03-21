@@ -38,7 +38,6 @@ from torch.nn.parameter import Parameter
 from .file_utils import WEIGHTS_NAME, CONFIG_NAME
 
 logger = logging.getLogger(__name__)
-logging.disable(logging.INFO)
 
 PRETRAINED_MODEL_ARCHIVE_MAP = {
     "bert-base-uncased": "https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased.tar.gz",

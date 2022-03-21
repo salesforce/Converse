@@ -1,6 +1,6 @@
 # Converse
 
-Converse is a flexible framework for building and deploying task-oriented chatbots. 
+Converse is a flexible framework for building and deploying task-oriented chatbots.
 
 ## Table of Contents
 1. [Getting Started](#getting-started)
@@ -25,7 +25,7 @@ If you don't plan to edit the package code, we recommend using this method of ru
 2. Create a Python 3.7 virtual environment using [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) and activate it.
 3. Run the following command to install the pip package of Converse:
    ```
-   pip install -i https://test.pypi.org/pypi/ --extra-index-url https://pypi.org/simple converse-test-command==0.2.12
+   pip install -i https://test.pypi.org/pypi/ --extra-index-url https://pypi.org/simple converse-test-command==0.2.16
    ```
 4. Install `svn` on your computer. On Mac, run:
    ```
@@ -36,7 +36,7 @@ If the command line output contains `"Hello, Converse!"`, then you installed the
 6. Run `converse-demo` to interact with pre-built example bots, and follow the instructions in your terminal.
 Note that first-time users can leave every required input empty to use the default value.
 Open the link provided by the script using your favorite browser, then you should see the demo page (pictured below).
-You can interact with the bot by typing in the chat box on the right and the tree visualization will change based on 
+You can interact with the bot by typing in the chat box on the right and the tree visualization will change based on
 your task progress. Remember that the example bots are not open-domain chatbots. Please check
 [Template Bots](./documentation/Template_bots.md) for the details of the template bots before you run the demo.
 ![Picture of the demo in the browser](./pictures/demo_start.png)
@@ -101,12 +101,12 @@ Welcome! We are so happy to see you willing to make your contributions to this r
 
 You can contribute via pull requests. Please follow these steps:
 1. Create an issue describing the feature you want to add or modify. A maintainer will review your issue.
-2. Discuss the issue with the maintainer in the issue you created. 
+2. Discuss the issue with the maintainer in the issue you created.
 3. Write your code, tests and documentation, and format them with `black`. We provide a `run_black.sh` script to help you format your code.
 4. Run `./run_unittest.sh`. Make sure that no error occurs in the tests.
-5. Create a pull request (PR) describing your changes. Note that your PR should be a reasonable length (<= 500 lines). 
+5. Create a pull request (PR) describing your changes. Note that your PR should be a reasonable length (<= 500 lines).
 
-Your PR will be reviewed by a maintainer. When you get the approval from the maintainer, you can merge your code into the 
+Your PR will be reviewed by a maintainer. When you get the approval from the maintainer, you can merge your code into the
 main branch.
 
 

@@ -20,7 +20,6 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
-logging.disable(logging.INFO)
 
 class NERApplication:
     """
