@@ -49,7 +49,7 @@ Open the link provided by the script using your favorite browser, then you shoul
 
 ### Running the Demo After Modifying Files in Converse
 
-1. Clone this repo and `cd` into the `eloq_dial` directory
+1. Clone this repo and `cd` into the `Converse` directory
     ```
     git clone git@github.com:salesforce/Converse.git
     cd Converse
@@ -60,9 +60,9 @@ Open the link provided by the script using your favorite browser, then you shoul
     ```
     pip install -r requirements.txt
     ```
-4. Add the `eloq_dial` folder to your `PYTHONPATH`.
+4. Add the `Converse` folder to your `PYTHONPATH`.
    ```
-   export PYTHONPATH=$PYTHONPATH:/your_directory/eloq_dial
+   export PYTHONPATH=$PYTHONPATH:/your_directory/Converse
    ```
 5. In one terminal window, run the backend and check the log file converse.log:
     ```
