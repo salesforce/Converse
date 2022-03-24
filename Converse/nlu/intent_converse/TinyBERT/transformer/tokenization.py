@@ -24,7 +24,6 @@ from io import open
 
 
 logger = logging.getLogger(__name__)
-logging.disable(logging.INFO)
 
 PRETRAINED_VOCAB_ARCHIVE_MAP = {
     "bert-base-uncased": "https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-vocab.txt",
