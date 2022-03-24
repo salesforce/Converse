@@ -113,4 +113,11 @@ main branch.
 
 
 ### Citing Converse
-`#TODO - add a link to the paper and technical report`
+@misc{xie2022converse,
+      title={Converse - A Tree-Based Modular Task-Oriented Dialogue System}, 
+      author={Tian Xie and Xinyi Yang and Angela S. Lin and Feihong Wu and Kazuma Hashimoto and Jin Qu and Young Mo Kang and Wenpeng Yin and Huan Wang and Semih Yavuz and Gang Wu and Michael Jones and Richard Socher and Yingbo Zhou and Wenhao Liu and Caiming Xiong},
+      year={2022},
+      eprint={2203.12187},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
