@@ -119,12 +119,10 @@ You can find more details in our paper: https://arxiv.org/abs/2203.12187
 
 If you're using Converse in your research or applications, please cite using this BibTeX:
 ```
-@misc{xie2022converse,
-      title={Converse - A Tree-Based Modular Task-Oriented Dialogue System}, 
-      author={Tian Xie and Xinyi Yang and Angela S. Lin and Feihong Wu and Kazuma Hashimoto and Jin Qu and Young Mo Kang and Wenpeng Yin and Huan Wang and Semih Yavuz and Gang Wu and Michael Jones and Richard Socher and Yingbo Zhou and Wenhao Liu and Caiming Xiong},
-      year={2022},
-      eprint={2203.12187},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+@article{xie2022converse,
+  title={Converse--A Tree-Based Modular Task-Oriented Dialogue System},
+  author={Xie, Tian and Yang, Xinyi and Lin, Angela S and Wu, Feihong and Hashimoto, Kazuma and Qu, Jin and Kang, Young Mo and Yin, Wenpeng and Wang, Huan and Yavuz, Semih and others},
+  journal={arXiv preprint arXiv:2203.12187},
+  year={2022}
 }
 ```
