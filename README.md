@@ -1,3 +1,5 @@
+![Converse logo](./pictures/logo.png)
+
 # Converse
 
 Converse is a flexible framework for building and deploying task-oriented chatbots.
