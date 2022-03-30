@@ -121,7 +121,7 @@ If you're using Converse in your research or applications, please cite using thi
 ```
 @article{xie2022converse,
   title={Converse--A Tree-Based Modular Task-Oriented Dialogue System},
-  author={Xie, Tian and Yang, Xinyi and Lin, Angela S and Wu, Feihong and Hashimoto, Kazuma and Qu, Jin and Kang, Young Mo and Yin, Wenpeng and Wang, Huan and Yavuz, Semih and others},
+  author={Xie, Tian and Yang, Xinyi and Lin, Angela S. and Wu, Feihong and Hashimoto, Kazuma and Qu, Jin and Kang, Young Mo and Yin, Wenpeng and Wang, Huan and Yavuz, Semih and Wu, Gang and Jones, Michael and Socher, Richard and Zhou, Yingbo and Liu, Wenhao and Xiong, Caiming},
   journal={arXiv preprint arXiv:2203.12187},
   year={2022}
 }
