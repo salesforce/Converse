@@ -1,4 +1,4 @@
-![Converse logo](./pictures/logo.png)
+![Converse logo](./pictures/logo.jpg)
 
 # Converse
 
