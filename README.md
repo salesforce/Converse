@@ -27,7 +27,7 @@ If you don't plan to edit the package code, we recommend using this method of ru
 2. Create a Python 3.7 virtual environment using [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) and activate it.
 3. Run the following command to install the pip package of Converse:
    ```
-   pip install -i https://test.pypi.org/pypi/ --extra-index-url https://pypi.org/simple converse-test-command==0.2.16
+   pip install converse-sfr==0.0.2
    ```
 4. Install `svn` on your computer. On Mac, run:
    ```
