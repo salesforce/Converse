@@ -4,8 +4,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="converse-test-command",
-    version="0.2.16",
+    name="converse-sfr",
+    version="0.0.2",
     author="Salesforce Research",
     author_email="converse.ai@salesforce.com",
     description="A framework that facilitates creating task-oriented chatbot",
@@ -28,6 +28,7 @@ setuptools.setup(
         "Flask-Cors==3.0.9",
         "fuzzysearch==0.7.0",
         "itsdangerous==2.0.1",
+        "Jinja2<3.1.0",
         "jsonpickle==1.4.2",
         "nltk==3.6.6",
         "num2words==0.5.10",
@@ -39,6 +40,7 @@ setuptools.setup(
         "redis==3.5.3",
         "requests==2.23.0",
         "scikit-learn==0.22.2.post1",
+        "Werkzeug==2.0.3",
         "wrapt_timeout_decorator==1.3.1",
     ],
     entry_points={

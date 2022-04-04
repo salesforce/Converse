@@ -27,11 +27,17 @@ If you don't plan to edit the package code, we recommend using this method of ru
 2. Create a Python 3.7 virtual environment using [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) and activate it.
 3. Run the following command to install the pip package of Converse:
    ```
-   pip install -i https://test.pypi.org/pypi/ --extra-index-url https://pypi.org/simple converse-test-command==0.2.16
+   pip install converse-sfr==0.0.2
    ```
 4. Install `svn` on your computer. On Mac, run:
    ```
    brew install svn
+   ```
+   If you are using Linux, check [https://subversion.apache.org/packages.html](https://subversion.apache.org/packages.html) to install `subversion`.
+   For example, on Ubuntu, run:
+   ```
+   apt-get install subversion
+   apt-get install libapache2-mod-svn
    ```
 5. Run `converse-shell` to test if the package is successfully installed.
 If the command line output contains `"Hello, Converse!"`, then you installed the package successfully.
@@ -119,10 +125,15 @@ You can find more details in our paper: https://arxiv.org/abs/2203.12187
 
 If you're using Converse in your research or applications, please cite using this BibTeX:
 ```
-@article{xie2022converse,
-  title={Converse--A Tree-Based Modular Task-Oriented Dialogue System},
-  author={Xie, Tian and Yang, Xinyi and Lin, Angela S. and Wu, Feihong and Hashimoto, Kazuma and Qu, Jin and Kang, Young Mo and Yin, Wenpeng and Wang, Huan and Yavuz, Semih and Wu, Gang and Jones, Michael and Socher, Richard and Zhou, Yingbo and Liu, Wenhao and Xiong, Caiming},
-  journal={arXiv preprint arXiv:2203.12187},
-  year={2022}
+@misc{https://doi.org/10.48550/arxiv.2203.12187,
+  doi = {10.48550/ARXIV.2203.12187},
+  url = {https://arxiv.org/abs/2203.12187},
+  author = {Xie, Tian and Yang, Xinyi and Lin, Angela S. and Wu, Feihong and Hashimoto, Kazuma and Qu, Jin and Kang, Young Mo and Yin, Wenpeng and Wang, Huan and Yavuz, Semih and Wu, Gang and Jones, Michael and Socher, Richard and Zhou, Yingbo and Liu, Wenhao and Xiong, Caiming},
+  keywords = {Computation and Language (cs.CL), Artificial Intelligence (cs.AI), FOS: Computer and information sciences, FOS: Computer and information sciences},
+  title = {Converse: A Tree-Based Modular Task-Oriented Dialogue System},
+  publisher = {arXiv},
+  year = {2022},
+  copyright = {Creative Commons Attribution 4.0 International}
 }
+
 ```
