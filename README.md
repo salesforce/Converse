@@ -34,6 +34,11 @@ If you don't plan to edit the package code, we recommend using this method of ru
    brew install svn
    ```
    If you are using Linux, check [https://subversion.apache.org/packages.html](https://subversion.apache.org/packages.html) to install `subversion`.
+   For example, on Ubuntu, run:
+   ```
+   apt-get install subversion
+   apt-get install libapache2-mod-svn
+   ```
 5. Run `converse-shell` to test if the package is successfully installed.
 If the command line output contains `"Hello, Converse!"`, then you installed the package successfully.
 6. Run `converse-demo` to interact with pre-built example bots, and follow the instructions in your terminal.
