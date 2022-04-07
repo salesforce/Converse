@@ -16,9 +16,6 @@ Converse is a flexible framework for building and deploying task-oriented chatbo
 
 - python >= 3.7
 
-### Running the NLU (NER/Intent/Coreference) services
-- Please check out [running NLU services in docker container](Converse/nlu/README_nlu.md)
-
 ### Running the Demo - Quick Start
 
 If you don't plan to edit the package code, we recommend using this method of running Converse because it is easier.
@@ -55,6 +52,14 @@ Open the link provided by the script using your favorite browser, then you shoul
 (pictured below). To learn more about how to build your own bot, please refer to
 [guide for building your first bot](./documentation/Build_your_first_bot.md).
 ![Picture of the configuration tool](./documentation/pictures/5.png)
+
+### Running the NLU (NER/Intent/Coreference) services
+You can start the NLU services by
+```
+docker run --name myintent -p 9001:9001 converseallresearch/intent:0.1
+docker run --name myner -p 50051:50051 converseallresearch/ner:0.1
+```
+- Please check out [running NLU services in docker container](Converse/nlu/README_nlu.md)
 
 ### Running the Demo After Modifying Files in Converse
 

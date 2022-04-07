@@ -1,7 +1,15 @@
-## Run NLU (NER/Intent/Coreference) services in docker container
+## Simple way to run NLU services in docker container
+You can start the NLU services by
+```
+docker run --name myintent -p 9001:9001 converseallresearch/intent:0.1
+docker run --name myner -p 50051:50051 converseallresearch/ner:0.1
+```
 
+## Or download the models and run NLU services manually
 
-First of all, download the two files *models.tar* and *coref.tar.bz2* from the url https://console.cloud.google.com/storage/browser/sfr-nlu-data-research
+The following steps are optional. 
+
+First, download the two files *models.tar* and *coref.tar.bz2* from the url https://console.cloud.google.com/storage/browser/sfr-nlu-data-research
 
 
 ### NER and Intent
