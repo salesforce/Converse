@@ -1,5 +1,10 @@
 # Build your first bot with Converse
 
+## Start the NLU services first
+```
+docker run --name myintent -p 9001:9001 converseallresearch/intent:0.1
+docker run --name myner -p 50051:50051 converseallresearch/ner:0.1
+```
 ## Two ways to make a new bot from scratch
 
 ### 1. Writing config yaml files:
