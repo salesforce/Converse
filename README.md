@@ -109,6 +109,15 @@ To learn more about how to customize Converse for your use case, please refer to
 - [Information Layer Configuration](./documentation/Info_layer_config.md)
 - [Template Bots](./documentation/Template_bots.md)
 
+## Ethical Considerations
+Chatbot systems can be capable of producing unethical conversations. 
+One example is [Microsoft’s Tay which learned and replicated offensive language within hours of interacting with users on Twitter](https://www.sciencedirect.com/science/article/pii/S2515856220300493). 
+However, because Converse does not contain a model-based NLG model, this capability is mitigated in our system. 
+A bot builder could still provide biased, racist, or otherwise offensive Task Tree, training samples, or FAQs resulting in inappropriate responses, but Converse does not have the ability to learn offensive or racist language from the end-users. 
+Likewise, Converse does not have the ability to learn and distribute PII, keeping a user’s information private. 
+As with other chatbot systems, there is a potential for dialogue failure. 
+To minimizes the risk of user frustration and attrition, bot builders can provide contingency plans for users such as links to a help page, or transference to a human operator.
+
 ## How to contribute
 Welcome! We are so happy to see you willing to make your contributions to this repository!
 
@@ -121,8 +130,6 @@ You can contribute via pull requests. Please follow these steps:
 
 Your PR will be reviewed by a maintainer. When you get the approval from the maintainer, you can merge your code into the
 main branch.
-
-
 
 
 ### Citing Converse
