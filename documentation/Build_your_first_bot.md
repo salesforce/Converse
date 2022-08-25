@@ -320,7 +320,7 @@ Now, I believe that you can build a very simple bot with **Converse**. We provid
 
 ### 2. Using config UI tool:
 
-We also provide a config UI tool to help you build your bot. The config UI generates a merged task and entity YAML file. Note that the upload button in the config UI is for resetting merged task-entity yaml file template. The default template file is `./Converse/bot_configs/ui_yamls/merged_task_entity.yaml`. You can click download button to get the current saved merged task-entity config yaml file.
+We also provide a config UI tool to help you build your bot. The config UI generates a merged task and entity YAML file. Note that the upload button in the config UI is for resetting merged task-entity yaml file template. The default template file is `./Converse/bot_configs/ui_yamls/merged_task_entity.yaml.tmpl`. You can click download button to get the current saved merged task-entity config yaml file.
 
 Run `run_config_UI.sh` to start config UI tool. 
 Open http://0.0.0.0:8080/?file=task in your browser, and you can see the config UI like this. Select `reset` next to `task` in the bottom left corner.
@@ -380,7 +380,7 @@ The task tree structure of `verify_user` task is
 ![30](pictures/30.png)
 Now go back to `success` condition of `inch_to_cm`, and add the task tree structure.
 ![31](pictures/31.png)
-Now click `save`. The generated yaml file is `Converse/demo/static/yamls/merged_task_entity.yaml`
+Now click `save`. The generated yaml file is `./Converse/bot_configs/ui_yamls/merged_task_entity.yaml`
 ![32](pictures/32.png)
 Click `chat` .
 ![33](pictures/33.png)
