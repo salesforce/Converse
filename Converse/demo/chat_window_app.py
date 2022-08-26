@@ -129,7 +129,7 @@ def funcInch2Cm():
 @entity_service.route("/get_weather", methods=["POST"])
 def funcGetWeather():
     def getWeather(zipcode):
-        apiKey = "69b8a3eca4a62e882f77a03275ce31a7"
+        apiKey = ""
         url = (
             "http://api.openweathermap.org/data/2.5/weather?zip={},us&appid={}".format(
                 zipcode, apiKey
