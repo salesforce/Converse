@@ -1,5 +1,7 @@
 black==20.8b1
+Cython
 grpcio==1.27.2
+gunicorn
 flake8==3.8.4
 flask==1.1.1
 Flask-Cors==3.0.9
