@@ -176,7 +176,7 @@ Entity:
 Now, let’s run our bot!
 
 ```
-python Converse/demo/dial_backend.py --task_path Converse/bot_configs/example_bot_in_tutorial/tasks.yaml —entity_path Converse/bot_configs/examlple_bot_in_tutorial/entity_config.yaml
+python Converse/demo/dial_backend.py --task_path Converse/bot_configs/example_bot_in_tutorial/tasks.yaml --entity_path Converse/bot_configs/example_bot_in_tutorial/entity_config.yaml
 ```
 
 By default, the backend is running on  [http://0.0.0.0:9002/](http://0.0.0.0:9002/client). You can open your browser, and then go to http://0.0.0.0:9002/client
