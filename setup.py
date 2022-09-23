@@ -33,7 +33,7 @@ setuptools.setup(
         "nltk==3.6.6",
         "num2words==0.5.10",
         "pony==0.7.14",
-        "protobuf==3.15.0",
+        "protobuf==3.18.3",
         "python-Levenshtein==0.12.2",
         "thefuzz==0.19.0",
         "pyyaml==5.4",
