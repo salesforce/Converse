@@ -40,7 +40,7 @@ setuptools.setup(
         "redis==3.5.3",
         "requests==2.23.0",
         "scikit-learn==0.22.2.post1",
-        "Werkzeug==2.0.3",
+        "Werkzeug==2.2.3",
         "wrapt_timeout_decorator==1.3.1",
     ],
     entry_points={
