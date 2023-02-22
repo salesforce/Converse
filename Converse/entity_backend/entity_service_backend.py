@@ -57,16 +57,8 @@ def funcInch2Cm():
 @app.route("/get_weather", methods=["POST"])
 def funcGetWeather():
     def getWeather(zipcode):
-        apiKey = "69b8a3eca4a62e882f77a03275ce31a7"
-        url = (
-            "http://api.openweathermap.org/data/2.5/weather?zip={},us&appid={}".format(
-                zipcode, apiKey
-            )
-        )
-        r = requests.get(url).json()
-        loc = r["name"]
-        weather = r["weather"][0]["description"]
-        return weather, loc
+        weather = choice(["sunny", "rainy", "cloudy", "windy"])
+        return weather, zipcode
 
     dm_msg = request.json["entities"]
     entity_name = "zip_code"

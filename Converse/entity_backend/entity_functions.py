@@ -9,6 +9,7 @@ import requests
 from thefuzz import process, fuzz
 from wrapt_timeout_decorator import timeout
 from Converse.utils.utils import resp
+from random import choice
 
 
 @timeout(0.1)
@@ -22,16 +23,8 @@ def funcInch2Cm(entities, *argv, **kargs):
 @timeout(2.0)
 def funcGetWeather(entities, *argv, **kargs):
     def getWeather(zipcode):
-        apiKey = "69b8a3eca4a62e882f77a03275ce31a7"
-        url = (
-            "http://api.openweathermap.org/data/2.5/weather?zip={},us&appid={}".format(
-                zipcode, apiKey
-            )
-        )
-        r = requests.get(url).json()
-        loc = r["name"]
-        weather = r["weather"][0]["description"]
-        return weather, loc
+        weather = choice(["sunny", "rainy", "cloudy", "windy"])
+        return weather, zipcode
 
     entity_name = "zip_code"
     zipcode = entities[entity_name]
