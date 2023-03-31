@@ -37,7 +37,7 @@ setuptools.setup(
         "python-Levenshtein==0.12.2",
         "thefuzz==0.19.0",
         "pyyaml==5.4",
-        "redis==3.5.3",
+        "redis==4.4.4",
         "requests==2.23.0",
         "scikit-learn==0.22.2.post1",
         "Werkzeug==2.2.3",
