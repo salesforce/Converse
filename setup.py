@@ -24,7 +24,7 @@ setuptools.setup(
         "black==20.8b1",
         "grpcio==1.27.2",
         "flake8==3.8.4",
-        "flask==1.1.1",
+        "flask==2.3.2",
         "Flask-Cors==3.0.9",
         "fuzzysearch==0.7.0",
         "itsdangerous==2.0.1",
