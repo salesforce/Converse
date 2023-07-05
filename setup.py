@@ -22,7 +22,7 @@ setuptools.setup(
     ],
     install_requires=[
         "black==20.8b1",
-        "grpcio==1.27.2",
+        "grpcio==1.53.0",
         "flake8==3.8.4",
         "flask==1.1.1",
         "Flask-Cors==3.0.9",

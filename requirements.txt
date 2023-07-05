@@ -1,6 +1,6 @@
 black==20.8b1
 Cython
-grpcio==1.27.2
+grpcio==1.53.0
 gunicorn
 flake8==3.8.4
 flask==1.1.1
